@@ -58,9 +58,8 @@ class SujetsApp(ctk.CTk):
         self.left_text = ctk.CTkFrame(
             self.bg_label,
             fg_color="#2f8f5b",
-            corner_radius=6,
-            border_width=2,
-            border_color="black"
+            corner_radius=0,
+            border_width=0
         )
         self.left_text.place(relx=0.07, rely=0.48, relwidth=0.8)
 
