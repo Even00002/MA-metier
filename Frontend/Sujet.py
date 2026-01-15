@@ -58,8 +58,8 @@ class SujetsApp(ctk.CTk):
         self.left_text = ctk.CTkFrame(
             self.bg_label,
             fg_color="#2f8f5b",
-            corner_radius=6,
-            border_width=2,
+            corner_radius=0,
+            border_width=0,
             border_color="black"
         )
         self.left_text.place(relx=0.07, rely=0.48, relwidth=0.8)
@@ -173,3 +173,4 @@ class SujetsApp(ctk.CTk):
 if __name__ == "__main__":
     app = SujetsApp()
     app.mainloop()
+
