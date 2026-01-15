@@ -22,12 +22,12 @@ USE `MA-METIER_projet` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `MA-METIER_projet`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(150) NOT NULL,
-  `surname` VARCHAR(150) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(25) NOT NULL,
   `email` VARCHAR(175) NOT NULL,
+  `birthdate` DATE NOT NULL,
   `age` INT NOT NULL,
-  `role` VARCHAR(5) NOT NULL,
+  `role` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `unique` (`username` ASC, `email` ASC) VISIBLE)
 ENGINE = InnoDB;
