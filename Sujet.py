@@ -89,7 +89,8 @@ class SujetsApp(ctk.CTk):
             text="← Retour",
             width=100,
             fg_color="#019136",
-            hover_color="#017a5c"
+            hover_color="#017a5c",
+            cursor = "hand2"
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
         ctk.CTkButton(
@@ -140,7 +141,8 @@ class SujetsApp(ctk.CTk):
             text="Modifier",
             fg_color="#019136",
             hover_color="#017a5c",
-            width=100
+            width=100,
+            cursor = "hand2"
         ).place(relx=0.95, rely=0.95, anchor="se")
 
     # === Resize background ===
