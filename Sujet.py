@@ -36,7 +36,7 @@ class SujetsApp(ctk.CTk):
 
         # Logo
         logo = Image.open("assets/logo.png").convert("RGBA")
-        self.logo_img = ctk.CTkImage(logo, logo, size=(80, 80))
+        self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
         )
