@@ -5,10 +5,16 @@ Auteur           : Even
 Date de création : 15.01.2026
 """
 
+from Choix_du_domaine import ChoixDomaine
 import customtkinter as ctk
 from PIL import Image
 
 ctk.set_appearance_mode("light")
+
+def retour(parent):
+    parent.destroy()        # ferme la fenêtre du choix du sujet
+    app = ChoixDomaine()        # lance la page Choix du domaine
+    app.mainloop()
 
 class ChoixApp(ctk.CTk):
     def __init__(self):
@@ -87,7 +93,8 @@ class ChoixApp(ctk.CTk):
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            cursor = "hand2"
+            cursor = "hand2",
+            command=lambda: retour(self),
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
         # Bouton quitter
