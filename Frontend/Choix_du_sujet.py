@@ -5,7 +5,7 @@ Auteur           : Even
 Date de création : 15.01.2026
 """
 
-from Choix_du_domaine import ChoixDomaine
+from Choix_du_domaine import ChoixDomaineApp
 import customtkinter as ctk
 from PIL import Image
 
@@ -13,7 +13,7 @@ ctk.set_appearance_mode("light")
 
 def retour(parent):
     parent.destroy()        # ferme la fenêtre du choix du sujet
-    app = ChoixDomaine()        # lance la page Choix du domaine
+    app = ChoixDomaineApp()        # lance la page Choix du domaine
     app.mainloop()
 
 class ChoixApp(ctk.CTk):
