@@ -4,10 +4,18 @@ Auteur           : Even
 Date de création : 15.01.2026
 """
 
+from Choix_du_sujet import ChoixApp
 import customtkinter as ctk
 from PIL import Image
 
 ctk.set_appearance_mode("light")
+
+
+def retour(parent):
+    parent.destroy()        # ferme la fenêtre du sujet
+    app = ChoixApp()        # lance la page Choix du sujet
+    app.mainloop()
+
 
 
 class SujetsApp(ctk.CTk):
@@ -59,8 +67,7 @@ class SujetsApp(ctk.CTk):
             self.bg_label,
             fg_color="#2f8f5b",
             corner_radius=0,
-            border_width=0,
-            border_color="black"
+            border_width=0
         )
         self.left_text.place(relx=0.07, rely=0.48, relwidth=0.8)
 
@@ -84,15 +91,18 @@ class SujetsApp(ctk.CTk):
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
         self.right.grid(row=0, column=1, sticky="nsew")
 
-        # Boutons top
+        # Boutons retour
         ctk.CTkButton(
             self.right,
             text="← Retour",
             width=100,
             fg_color="#019136",
-            hover_color="#017a5c"
+            hover_color="#017a5c",
+            cursor = "hand2",
+            command=lambda: retour(self),
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
+        # Boutons quitter
         ctk.CTkButton(
             self.right,
             text="Quitter",
@@ -141,7 +151,8 @@ class SujetsApp(ctk.CTk):
             text="Modifier",
             fg_color="#019136",
             hover_color="#017a5c",
-            width=100
+            width=100,
+            cursor = "hand2"
         ).place(relx=0.95, rely=0.95, anchor="se")
 
     # === Resize background ===
@@ -173,5 +184,3 @@ class SujetsApp(ctk.CTk):
 if __name__ == "__main__":
     app = SujetsApp()
     app.mainloop()
-
-
