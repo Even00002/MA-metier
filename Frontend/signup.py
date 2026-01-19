@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
-from Frontend.login_signup import *
+from Frontend.login import *
 
 class SignupApp(ctk.CTk):
     def __init__(self):
@@ -82,7 +82,7 @@ class SignupApp(ctk.CTk):
     # === MODIFICATION DE applogin ===
     def applogin(self):
         self.destroy()  # Ferme la fenêtre Signup
-        from Frontend.login_signup import LoginApp  # Import local
+        from Frontend.login import LoginApp  # Import local
         app = LoginApp()
         app.mainloop()
 
