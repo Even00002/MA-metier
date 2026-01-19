@@ -4,10 +4,18 @@ Auteur           : Even
 Date de création : 15.01.2026
 """
 
+from Choix_du_sujet import ChoixApp
 import customtkinter as ctk
 from PIL import Image
 
 ctk.set_appearance_mode("light")
+
+
+def retour(parent):
+    parent.destroy()        # ferme la fenêtre du sujet
+    app = ChoixApp()        # lance la page Choix du sujet
+    app.mainloop()
+
 
 
 class SujetsApp(ctk.CTk):
@@ -83,16 +91,18 @@ class SujetsApp(ctk.CTk):
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
         self.right.grid(row=0, column=1, sticky="nsew")
 
-        # Boutons top
+        # Boutons retour
         ctk.CTkButton(
             self.right,
             text="← Retour",
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            cursor = "hand2"
+            cursor = "hand2",
+            command=lambda: retour(self),
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
+        # Boutons quitter
         ctk.CTkButton(
             self.right,
             text="Quitter",

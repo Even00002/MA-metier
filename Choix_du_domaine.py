@@ -10,7 +10,7 @@ from PIL import Image
 
 ctk.set_appearance_mode("light")
 
-class ChoixDomaine(ctk.CTk):
+class ChoixDomaineApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
@@ -175,5 +175,5 @@ class ChoixDomaine(ctk.CTk):
 
 
 if __name__ == "__main__":
-    app = ChoixDomaine()
+    app = ChoixDomaineApp()
     app.mainloop()
