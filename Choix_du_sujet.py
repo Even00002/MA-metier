@@ -1,4 +1,3 @@
-
 """
 Nom du fichier   : Choix_du_Sujets.py
 Auteur           : Even
