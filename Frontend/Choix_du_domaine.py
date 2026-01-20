@@ -188,8 +188,8 @@ class ChoixDomaineApp(ctk.CTk):
 
     def appchange(self):
         self.destroy()  # Ferme la fenêtre Login
-        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
-        app = SignupApp()
+        from Frontend.login import LoginApp  # Import local pour éviter la boucle
+        app = LoginApp()
         app.mainloop()
 
 
