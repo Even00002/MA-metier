@@ -13,7 +13,7 @@ class ChoixDomaineApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
-        self.geometry("1100x700")
+        self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
         # === Layout principal ===
@@ -26,7 +26,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.grid(row=0, column=0, sticky="nsew")
 
         # Background
-        self.bg_path = "assets/left_background.jpg"
+        self.bg_path = "Frontend/assets/left_background.jpg"
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(self.left, text="")
@@ -34,7 +34,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("assets/Logo.png").convert("RGBA")
+        logo = Image.open("Frontend/assets/Logo.png").convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
@@ -86,7 +86,8 @@ class ChoixDomaineApp(ctk.CTk):
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            cursor = "hand2"
+            cursor = "hand2",
+            command=self.appchange
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
         # Bouton quitter
@@ -156,34 +157,41 @@ class ChoixDomaineApp(ctk.CTk):
         # Ici, tu peux ouvrir la fenêtre correspondante
         if sujet == "Programmation":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
         if sujet == "Web":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
         if sujet == "Bases de données":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
         if sujet == "Systèmes & Réseaux":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
         if sujet == "Outils & Méthode":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
         if sujet == "Aide scolaire IT":
             self.destroy()
-            from Choix_du_sujet import ChoixApp
+            from Frontend.Choix_du_sujet import ChoixApp
             app = ChoixApp()
             app.mainloop()
+
+    def appchange(self):
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
+        app = SignupApp()
+        app.mainloop()
+
 
     # === Resize background ===
     def _resize_bg(self, event):

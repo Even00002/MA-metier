@@ -4,7 +4,7 @@ Auteur           : Even
 Date de création : 15.01.2026
 """
 
-from Choix_du_sujet import ChoixApp
+from Frontend.Choix_du_sujet import ChoixApp
 import customtkinter as ctk
 from PIL import Image
 
@@ -19,7 +19,7 @@ class SujetsApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
-        self.geometry("1100x700")
+        self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
         # === Layout principal ===
@@ -31,7 +31,7 @@ class SujetsApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "assets/left_background.jpg"
+        self.bg_path = "Frontend/assets/left_background.jpg"
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(self.left, text="")
@@ -40,7 +40,7 @@ class SujetsApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("assets/logo.png").convert("RGBA")
+        logo = Image.open("Frontend/assets/Logo.png").convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"

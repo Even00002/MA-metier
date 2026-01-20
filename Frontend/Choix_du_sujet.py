@@ -4,7 +4,7 @@ Auteur           : Even
 Date de création : 16.01.2026
 """
 
-from Choix_du_domaine import ChoixDomaineApp
+from Frontend.Choix_du_domaine import ChoixDomaineApp
 import customtkinter as ctk
 from PIL import Image
 
@@ -20,7 +20,7 @@ class ChoixApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
-        self.geometry("1100x700")
+        self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
         # === Layout principal ===
@@ -33,7 +33,7 @@ class ChoixApp(ctk.CTk):
         self.left.grid(row=0, column=0, sticky="nsew")
 
         # Background
-        self.bg_path = "assets/left_background.jpg"
+        self.bg_path = "Frontend/assets/left_background.jpg"
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(self.left, text="")
@@ -41,7 +41,7 @@ class ChoixApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("assets/logo.png").convert("RGBA")
+        logo = Image.open("Frontend/assets/Logo.png").convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
@@ -164,27 +164,27 @@ class ChoixApp(ctk.CTk):
         # Ici, tu peux ouvrir la fenêtre correspondante
         if sujet == "Python":
             self.destroy()
-            from Sujet import SujetsApp
+            from Frontend.Sujet import SujetsApp
             app = SujetsApp()
             app.mainloop()
         if sujet == "C#":
             self.destroy()
-            from Sujet import SujetsApp
+            from Frontend.Sujet import SujetsApp
             app = SujetsApp()
             app.mainloop()
         if sujet == "Javascript":
             self.destroy()
-            from Sujet import SujetsApp
+            from Frontend.Sujet import SujetsApp
             app = SujetsApp()
             app.mainloop()
         if sujet == "C++":
             self.destroy()
-            from Sujet import SujetsApp
+            from Frontend.Sujet import SujetsApp
             app = SujetsApp()
             app.mainloop()
         if sujet == "Java":
             self.destroy()
-            from Sujet import SujetsApp
+            from Frontend.Sujet import SujetsApp
             app = SujetsApp()
             app.mainloop()
 

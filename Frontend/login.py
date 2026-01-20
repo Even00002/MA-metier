@@ -12,7 +12,7 @@ class LoginApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Login")
-        self.geometry("1100x700")
+        self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
         # === Layout principal ===
@@ -24,7 +24,7 @@ class LoginApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "assets/left_background.jpg"
+        self.bg_path = "Frontend/assets/left_background.jpg"
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(
@@ -40,7 +40,7 @@ class LoginApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo_pil = Image.open("assets/logo.png").convert("RGBA")
+        logo_pil = Image.open("Frontend/assets/Logo.png").convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
             light_image=logo_pil,
             dark_image=logo_pil,

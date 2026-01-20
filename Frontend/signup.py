@@ -6,7 +6,7 @@ class SignupApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Signup")
-        self.geometry("1100x700")
+        self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
         # === Layout principal ===
@@ -18,7 +18,7 @@ class SignupApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "assets/left_background.jpg"
+        self.bg_path = "Frontend/assets/left_background.jpg"
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(
@@ -34,7 +34,7 @@ class SignupApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo_pil = Image.open("assets/logo.png").convert("RGBA")
+        logo_pil = Image.open("Frontend/assets/Logo.png").convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
             light_image=logo_pil,
             dark_image=logo_pil,
@@ -85,6 +85,7 @@ class SignupApp(ctk.CTk):
         from Frontend.login import LoginApp  # Import local
         app = LoginApp()
         app.mainloop()
+
 
 
     def show_signup_page(self):
@@ -177,7 +178,10 @@ class SignupApp(ctk.CTk):
 
     def on_signup(self):
         print("Compte créé (simulé)")
-
+        self.destroy()  # Ferme la fenêtre Signup
+        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
+        app = ChoixDomaineApp()
+        app.mainloop()
 # --- CORRECTION INDENTATION ---
 if __name__ == "__main__":
     app = SignupApp()
