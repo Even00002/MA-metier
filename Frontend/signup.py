@@ -93,6 +93,11 @@ class SignupApp(ctk.CTk):
         back_btn = ctk.CTkButton(self.right, text="← Retour", fg_color="#019136", width=100, command=self.applogin)
         back_btn.place(relx=0.05, rely=0.05, anchor="nw")
 
+        # Bouton quitter
+        self.btn_quit = ctk.CTkButton(self.right, text="Quitter", width=110, fg_color="#019136",
+                                     hover_color="#017A5C", command=self.destroy)
+        self.btn_quit.place(relx=0.95, rely=0.05, anchor="ne")
+
         # Formulaire d'inscription
         self.reg_card = ctk.CTkFrame(self.right, corner_radius=12, fg_color="#7AC596", width=420)
         self.reg_card.place(relx=0.5, rely=0.5, anchor="center")
