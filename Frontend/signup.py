@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
-from Frontend.login_signup import *
+from Frontend.login import *
 
 class SignupApp(ctk.CTk):
     def __init__(self):
@@ -82,7 +82,7 @@ class SignupApp(ctk.CTk):
     # === MODIFICATION DE applogin ===
     def applogin(self):
         self.destroy()  # Ferme la fenêtre Signup
-        from Frontend.login_signup import LoginApp  # Import local
+        from Frontend.login import LoginApp  # Import local
         app = LoginApp()
         app.mainloop()
 
@@ -92,6 +92,11 @@ class SignupApp(ctk.CTk):
         # Bouton retour
         back_btn = ctk.CTkButton(self.right, text="← Retour", fg_color="#019136", width=100, command=self.applogin)
         back_btn.place(relx=0.05, rely=0.05, anchor="nw")
+
+        # Bouton quitter
+        self.btn_quit = ctk.CTkButton(self.right, text="Quitter", width=110, fg_color="#019136",
+                                     hover_color="#017A5C", command=self.destroy)
+        self.btn_quit.place(relx=0.95, rely=0.05, anchor="ne")
 
         # Formulaire d'inscription
         self.reg_card = ctk.CTkFrame(self.right, corner_radius=12, fg_color="#7AC596", width=420)

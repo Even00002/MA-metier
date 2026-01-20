@@ -1,8 +1,7 @@
-
 """
 Nom du fichier   : Choix_du_Sujets.py
 Auteur           : Even
-Date de création : 15.01.2026
+Date de création : 16.01.2026
 """
 
 from Choix_du_domaine import ChoixDomaineApp
@@ -15,6 +14,7 @@ def retour(parent):
     parent.destroy()        # ferme la fenêtre du choix du sujet
     app = ChoixDomaineApp()        # lance la page Choix du domaine
     app.mainloop()
+
 
 class ChoixApp(ctk.CTk):
     def __init__(self):
@@ -93,7 +93,7 @@ class ChoixApp(ctk.CTk):
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            cursor = "hand2",
+            cursor="hand2",
             command=lambda: retour(self),
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
@@ -136,6 +136,7 @@ class ChoixApp(ctk.CTk):
             "font": ctk.CTkFont(size=16, weight="bold")
         }
 
+        # Liste des sujets
         subjects = [
             ("Python", 0, 0),
             ("C#", 0, 1),
@@ -144,14 +145,48 @@ class ChoixApp(ctk.CTk):
             ("Java", 2, 0)
         ]
 
+        # Création des boutons
         for text, r, c in subjects:
-            ctk.CTkButton(self.buttons_frame, text=text, **btn_style).grid(
-                row=r, column=c, padx=20, pady=15
-            )
+            ctk.CTkButton(
+                self.buttons_frame,
+                text=text,
+                command=lambda t=text: self.ouvrir_sujet(t),
+                **btn_style
+            ).grid(row=r, column=c, padx=20, pady=15)
 
-        # Aligner Java au centre
+        # Aligner colonnes
         self.buttons_frame.grid_columnconfigure(0, weight=1)
         self.buttons_frame.grid_columnconfigure(1, weight=1)
+
+    # === Méthode pour gérer le clic sur un sujet ===
+    def ouvrir_sujet(self, sujet):
+        print(f"Sujet choisi : {sujet}")
+        # Ici, tu peux ouvrir la fenêtre correspondante
+        if sujet == "Python":
+            self.destroy()
+            from Sujet import SujetsApp
+            app = SujetsApp()
+            app.mainloop()
+        if sujet == "C#":
+            self.destroy()
+            from Sujet import SujetsApp
+            app = SujetsApp()
+            app.mainloop()
+        if sujet == "Javascript":
+            self.destroy()
+            from Sujet import SujetsApp
+            app = SujetsApp()
+            app.mainloop()
+        if sujet == "C++":
+            self.destroy()
+            from Sujet import SujetsApp
+            app = SujetsApp()
+            app.mainloop()
+        if sujet == "Java":
+            self.destroy()
+            from Sujet import SujetsApp
+            app = SujetsApp()
+            app.mainloop()
 
     # === Resize background ===
     def _resize_bg(self, event):
