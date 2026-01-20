@@ -1,8 +1,7 @@
-
 """
 Nom du fichier   : Choix_du_Sujets.py
 Auteur           : Even
-Date de création : 15.01.2026
+Date de création : 16.01.2026
 """
 
 from Choix_du_domaine import ChoixDomaineApp
