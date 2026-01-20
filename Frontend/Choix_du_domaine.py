@@ -34,7 +34,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("assets/logo.png").convert("RGBA")
+        logo = Image.open("assets/Logo.png").convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
@@ -139,13 +139,51 @@ class ChoixDomaineApp(ctk.CTk):
         ]
 
         for text, r, c in subjects:
-            ctk.CTkButton(self.buttons_frame, text=text, **btn_style).grid(
-                row=r, column=c, padx=20, pady=15
-            )
+            ctk.CTkButton(
+                self.buttons_frame,
+                text=text,
+                command=lambda t=text: self.ouvrir_sujet(t),
+                **btn_style
+            ).grid(row=r, column=c, padx=20, pady=15)
 
         # Aligner Java au centre
         self.buttons_frame.grid_columnconfigure(0, weight=1)
         self.buttons_frame.grid_columnconfigure(1, weight=1)
+
+    # === Méthode pour gérer le clic sur un sujet ===
+    def ouvrir_sujet(self, sujet):
+        print(f"Sujet choisi : {sujet}")
+        # Ici, tu peux ouvrir la fenêtre correspondante
+        if sujet == "Programmation":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
+        if sujet == "Web":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
+        if sujet == "Bases de données":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
+        if sujet == "Systèmes & Réseaux":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
+        if sujet == "Outils & Méthode":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
+        if sujet == "Aide scolaire IT":
+            self.destroy()
+            from Choix_du_sujet import ChoixApp
+            app = ChoixApp()
+            app.mainloop()
 
     # === Resize background ===
     def _resize_bg(self, event):
