@@ -10,13 +10,10 @@ from PIL import Image
 
 ctk.set_appearance_mode("light")
 
-
 def retour(parent):
     parent.destroy()        # ferme la fenêtre du sujet
     app = ChoixApp()        # lance la page Choix du sujet
     app.mainloop()
-
-
 
 class SujetsApp(ctk.CTk):
     def __init__(self):
