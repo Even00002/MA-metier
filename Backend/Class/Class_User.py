@@ -15,7 +15,6 @@ class User(Base):
     password = Column(String(25), nullable=False)
     email = Column(String(175), nullable=False)
     birthdate = Column(Date, nullable=False)
-    age = Column(Integer, nullable=False)
     role = Column(String(10), nullable=False)
 
     def __repr__(self):
@@ -23,6 +22,6 @@ class User(Base):
             Return a readable string representation of the Person object,
             showing id, firstname, and lastname
         """
-        return (f"id: {self.id}, username: {self.username}, password: {self.password}, email: {self.email}, birthdate: {self.birthdate}, age: {self.age}, role: {self.role}")
+        return (f"id: {self.id}, username: {self.username}, password: {self.password}, email: {self.email}, birthdate: {self.birthdate}, role: {self.role}")
 
 
