@@ -19,4 +19,4 @@ class Domain(Base):
             Return a readable string representation of the Person object,
             showing id, firstname, and lastname
         """
-        return (f"id: {self.id}, name: {self.name}, password: {self.information}")
+        return (f"id: {self.id}, name: {self.name}, information: {self.information}")
