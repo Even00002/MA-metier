@@ -91,13 +91,6 @@ class LoginApp(ctk.CTk):
         for widget in self.right.winfo_children():
             widget.destroy()
 
-    # === MODIFICATION DE appchange ===
-    def appchange(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
-        app = SignupApp()
-        app.mainloop()
-
     def show_login_page(self):
         global show_login_page
 
@@ -157,7 +150,7 @@ class LoginApp(ctk.CTk):
 
         ctk.CTkLabel(self.signup_card, text="Pas encore de compte ?", text_color="white").grid(row=0, padx=20, pady=5)
         ctk.CTkButton(self.signup_card, text="SIGN UP", height=42, fg_color="#019136",
-                      command=self.appchange).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
+                      command=self.on_signup).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
 
 
 
@@ -179,10 +172,17 @@ class LoginApp(ctk.CTk):
         self.bg_label.configure(image=self.bg_ctk)
 
     def on_login(self):
-        print("Tentative de login...")
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local pour éviter la boucle
+        app = ChoixDomaineApp()
+        app.mainloop()
 
     def on_signup(self):
-        print("Compte créé (simulé)")
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
+        app = SignupApp()
+        app.mainloop()
+
 
 if __name__ == "__main__":
     app = LoginApp()
