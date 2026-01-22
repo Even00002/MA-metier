@@ -22,7 +22,7 @@ def retour(parent):
 class ChoixOutils(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("CPNV HUB - Sujet")
+        self.title("CPNV HUB - Outils & Méthodes")
         self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
@@ -44,8 +44,8 @@ class ChoixOutils(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
-        self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
+        self.logo_img = ctk.CTkImage(logo, logo, size=(100, 50))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
         )
@@ -53,7 +53,7 @@ class ChoixOutils(ctk.CTk):
         # Titre gauche
         ctk.CTkLabel(
             self.bg_label,
-            text="Forum Outils & Méthode",
+            text="Forum Outils & Méthodes",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
@@ -118,7 +118,7 @@ class ChoixOutils(ctk.CTk):
         ctk.CTkLabel(
             self.card,
             text="Veuillez choisir un sujet du\n"
-                 "domaine Outils & Méthode",
+                 "domaine Outils & Méthodes",
             font=ctk.CTkFont(size=26, weight="bold"),
             text_color="white",
             justify="center"

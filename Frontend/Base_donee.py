@@ -22,7 +22,7 @@ def retour(parent):
 class ChoixBase(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("CPNV HUB - Sujet")
+        self.title("CPNV HUB - Base de Donée")
         self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
@@ -44,8 +44,8 @@ class ChoixBase(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
-        self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
+        self.logo_img = ctk.CTkImage(logo, logo, size=(100, 50))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
         )

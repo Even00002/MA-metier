@@ -43,7 +43,7 @@ class SujetsMCD(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"

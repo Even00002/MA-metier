@@ -46,7 +46,7 @@ class LoginApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
             light_image=logo,
             dark_image=logo,
