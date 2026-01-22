@@ -39,11 +39,11 @@ class SignupApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
             light_image=logo,
             dark_image=logo,
-            size=(100, 90),
+            size=(100, 50),
 
         )
 
@@ -53,7 +53,7 @@ class SignupApp(ctk.CTk):
             text="",
             bg_color="white"
         )
-        self.logo_label.place(relx=0.05, rely=0.06, anchor="nw")
+        self.logo_label.place(relx=0.05, rely=0.05, anchor="nw")
 
         self.left_title = ctk.CTkLabel(
             self.bg_label,
