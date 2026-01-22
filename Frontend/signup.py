@@ -1,6 +1,11 @@
 import customtkinter as ctk
+import os
 from PIL import Image
 from Frontend.login import *
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
+ctk.set_appearance_mode("light")
 
 class SignupApp(ctk.CTk):
     def __init__(self):
@@ -18,7 +23,7 @@ class SignupApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "Frontend/assets/left_background.jpg"
+        self.bg_path = os.path.join(ASSETS_DIR, "left_background.jpg")
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(
@@ -34,10 +39,10 @@ class SignupApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo_pil = Image.open("Frontend/assets/Logo.png").convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
-            light_image=logo_pil,
-            dark_image=logo_pil,
+            light_image=logo,
+            dark_image=logo,
             size=(100, 90),
 
         )

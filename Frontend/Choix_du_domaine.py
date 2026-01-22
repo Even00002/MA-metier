@@ -5,8 +5,11 @@ Date de création : 16.01.2026
 """
 
 import customtkinter as ctk
+import os
 from PIL import Image
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
 
 class ChoixDomaineApp(ctk.CTk):
@@ -26,7 +29,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.grid(row=0, column=0, sticky="nsew")
 
         # Background
-        self.bg_path = "Frontend/assets/left_background.jpg"
+        self.bg_path = os.path.join(ASSETS_DIR, "left_background.jpg")
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(self.left, text="")
@@ -34,7 +37,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("Frontend/assets/Logo.png").convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
         self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
@@ -157,33 +160,33 @@ class ChoixDomaineApp(ctk.CTk):
         # Ici, tu peux ouvrir la fenêtre correspondante
         if sujet == "Programmation":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Programmation import ChoixProg
+            app = ChoixProg()
             app.mainloop()
         if sujet == "Web":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Web import ChoixWeb
+            app = ChoixWeb()
             app.mainloop()
         if sujet == "Bases de données":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Base_donee import ChoixBase
+            app = ChoixBase()
             app.mainloop()
         if sujet == "Systèmes & Réseaux":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Systeme_et_Reseau import ChoixReseau
+            app = ChoixReseau()
             app.mainloop()
         if sujet == "Outils & Méthode":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Outil_et_Methode import ChoixOutils
+            app = ChoixOutils()
             app.mainloop()
         if sujet == "Aide scolaire IT":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Aide_scolaire_IT import ChoixAide
+            app = ChoixAide()
             app.mainloop()
 
     def appchange(self):

@@ -3,9 +3,15 @@ Nom du fichier   : login.py
 Auteur           : Joel Cunha Faria
 Date de création : 15.01.2026
 """
+
+
 import customtkinter as ctk
+import os
 from PIL import Image
 from Frontend.signup import *
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
 
 class LoginApp(ctk.CTk):
@@ -24,7 +30,7 @@ class LoginApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "Frontend/assets/left_background.jpg"
+        self.bg_path = os.path.join(ASSETS_DIR, "left_background.jpg")
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(
@@ -40,10 +46,10 @@ class LoginApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo_pil = Image.open("Frontend/assets/Logo.png").convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.png")).convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
-            light_image=logo_pil,
-            dark_image=logo_pil,
+            light_image=logo,
+            dark_image=logo,
             size=(100, 90),
 
         )
@@ -90,6 +96,13 @@ class LoginApp(ctk.CTk):
     def clear_right_side(self):
         for widget in self.right.winfo_children():
             widget.destroy()
+
+    # === MODIFICATION DE appchange ===
+    def appchange(self):
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
+        app = SignupApp()
+        app.mainloop()
 
     def show_login_page(self):
         global show_login_page
@@ -150,7 +163,7 @@ class LoginApp(ctk.CTk):
 
         ctk.CTkLabel(self.signup_card, text="Pas encore de compte ?", text_color="white").grid(row=0, padx=20, pady=5)
         ctk.CTkButton(self.signup_card, text="SIGN UP", height=42, fg_color="#019136",
-                      command=self.on_signup).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
+                      command=self.appchange).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
 
 
 
@@ -172,17 +185,14 @@ class LoginApp(ctk.CTk):
         self.bg_label.configure(image=self.bg_ctk)
 
     def on_login(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local pour éviter la boucle
+        print("Compte créé (simulé)")
+        self.destroy()  # Ferme la fenêtre Signup
+        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
         app = ChoixDomaineApp()
         app.mainloop()
 
     def on_signup(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
-        app = SignupApp()
-        app.mainloop()
-
+        print("Compte créé (simulé)")
 
 if __name__ == "__main__":
     app = LoginApp()
