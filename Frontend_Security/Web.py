@@ -1,5 +1,5 @@
 """
-Nom du fichier   : Base_donee.py
+Nom du fichier   : Web.py
 Auteur           : Even
 Date de création : 20.01.2026
 """
@@ -19,7 +19,7 @@ def retour(parent):
     app.mainloop()
 
 
-class ChoixBase(ctk.CTk):
+class ChoixWeb(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
@@ -53,7 +53,7 @@ class ChoixBase(ctk.CTk):
         # Titre gauche
         ctk.CTkLabel(
             self.bg_label,
-            text="Forum Bases de donées",
+            text="Forum Web",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
@@ -118,8 +118,7 @@ class ChoixBase(ctk.CTk):
         ctk.CTkLabel(
             self.card,
             text="Veuillez choisir un sujet du\n"
-                 "domaine Sur les\n"
-                 "Bases de donées",
+                 "domaine Web",
             font=ctk.CTkFont(size=26, weight="bold"),
             text_color="white",
             justify="center"
@@ -137,14 +136,14 @@ class ChoixBase(ctk.CTk):
             "hover_color": "#017a5c",
             "text_color": "white",
             "cursor": "hand2",
-            "font": ctk.CTkFont(size=12, weight="bold")
+            "font": ctk.CTkFont(size=16, weight="bold")
         }
 
         # Liste des sujets
         subjects = [
-            ("MCD", 0, 0),
-            ("MLD", 0, 1),
-            ("SQL", 1, 0),
+            ("HTML", 0, 0),
+            ("CSS", 0, 1),
+            ("Javascript", 1, 0),
         ]
 
         # Création des boutons
@@ -164,21 +163,22 @@ class ChoixBase(ctk.CTk):
     def ouvrir_sujet(self, sujet):
         print(f"Sujet choisi : {sujet}")
         # Ici, tu peux ouvrir la fenêtre correspondante
-        if sujet == "MCD":
+        if sujet == "HTML":
             self.destroy()
-            from Frontend.Base_donee_dir.mcd import SujetsMCD
-            app = SujetsMCD()
+            from Frontend.Web_dir.HTML import Sujetshtml
+            app = Sujetshtml()
             app.mainloop()
-        if sujet == "MLD":
+        if sujet == "CSS":
             self.destroy()
-            from Frontend.Base_donee_dir.mld import SujetsMLD
-            app = SujetsMLD()
+            from Frontend.Web_dir.CSS import Sujetscss
+            app = Sujetscss()
             app.mainloop()
-        if sujet == "SQL":
+        if sujet == "Javascript":
             self.destroy()
-            from Frontend.Base_donee_dir.sql import SujetsSQL
-            app = SujetsSQL()
+            from Frontend.Web_dir.Javascript_Web import SujetsJavascript
+            app = SujetsJavascript()
             app.mainloop()
+
 
     # === Resize background ===
     def _resize_bg(self, event):
@@ -207,5 +207,5 @@ class ChoixBase(ctk.CTk):
 
 
 if __name__ == "__main__":
-    app = ChoixBase()
+    app = ChoixWeb()
     app.mainloop()

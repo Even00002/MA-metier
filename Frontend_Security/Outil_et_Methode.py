@@ -1,7 +1,7 @@
 """
-Nom du fichier   : Base_donee.py
+Nom du fichier   : Outil_et_Methode.py
 Auteur           : Even
-Date de création : 20.01.2026
+Date de création : 22.01.2026
 """
 
 from Frontend.Choix_du_domaine import ChoixDomaineApp
@@ -19,7 +19,7 @@ def retour(parent):
     app.mainloop()
 
 
-class ChoixBase(ctk.CTk):
+class ChoixOutils(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
@@ -53,7 +53,7 @@ class ChoixBase(ctk.CTk):
         # Titre gauche
         ctk.CTkLabel(
             self.bg_label,
-            text="Forum Bases de donées",
+            text="Forum Outils & Méthode",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
@@ -118,8 +118,7 @@ class ChoixBase(ctk.CTk):
         ctk.CTkLabel(
             self.card,
             text="Veuillez choisir un sujet du\n"
-                 "domaine Sur les\n"
-                 "Bases de donées",
+                 "domaine Outils & Méthode",
             font=ctk.CTkFont(size=26, weight="bold"),
             text_color="white",
             justify="center"
@@ -137,14 +136,13 @@ class ChoixBase(ctk.CTk):
             "hover_color": "#017a5c",
             "text_color": "white",
             "cursor": "hand2",
-            "font": ctk.CTkFont(size=12, weight="bold")
+            "font": ctk.CTkFont(size=16, weight="bold")
         }
 
         # Liste des sujets
         subjects = [
-            ("MCD", 0, 0),
-            ("MLD", 0, 1),
-            ("SQL", 1, 0),
+            ("Lien du CPNV", 0, 0),
+            ("Lien de\n l'Intranet", 0, 1),
         ]
 
         # Création des boutons
@@ -164,20 +162,15 @@ class ChoixBase(ctk.CTk):
     def ouvrir_sujet(self, sujet):
         print(f"Sujet choisi : {sujet}")
         # Ici, tu peux ouvrir la fenêtre correspondante
-        if sujet == "MCD":
+        if sujet == "Lien du CPNV":
             self.destroy()
-            from Frontend.Base_donee_dir.mcd import SujetsMCD
-            app = SujetsMCD()
+            from Frontend.Outil_et_Methode_dir.CPNV import SujetsCPNV
+            app = SujetsCPNV()
             app.mainloop()
-        if sujet == "MLD":
+        if sujet == "Lien de\n l'Intranet":
             self.destroy()
-            from Frontend.Base_donee_dir.mld import SujetsMLD
-            app = SujetsMLD()
-            app.mainloop()
-        if sujet == "SQL":
-            self.destroy()
-            from Frontend.Base_donee_dir.sql import SujetsSQL
-            app = SujetsSQL()
+            from Frontend.Outil_et_Methode_dir.Intranet import SujetsIntranet
+            app = SujetsIntranet()
             app.mainloop()
 
     # === Resize background ===
@@ -207,5 +200,5 @@ class ChoixBase(ctk.CTk):
 
 
 if __name__ == "__main__":
-    app = ChoixBase()
+    app = ChoixOutils()
     app.mainloop()

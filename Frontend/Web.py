@@ -136,7 +136,7 @@ class ChoixWeb(ctk.CTk):
             "hover_color": "#017a5c",
             "text_color": "white",
             "cursor": "hand2",
-            "font": ctk.CTkFont(size=16, weight="bold")
+            "font": ctk.CTkFont(size=12, weight="bold")
         }
 
         # Liste des sujets

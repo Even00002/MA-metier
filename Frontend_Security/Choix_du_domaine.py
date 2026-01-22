@@ -1,10 +1,9 @@
 """
-Nom du fichier   : Base_donee.py
+Nom du fichier   : Choix_du_domaine.py
 Auteur           : Even
-Date de création : 20.01.2026
+Date de création : 16.01.2026
 """
 
-from Frontend.Choix_du_domaine import ChoixDomaineApp
 import customtkinter as ctk
 import os
 from PIL import Image
@@ -13,13 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
 
-def retour(parent):
-    parent.destroy()        # ferme la fenêtre du choix du sujet
-    app = ChoixDomaineApp()        # lance la page Choix du domaine
-    app.mainloop()
-
-
-class ChoixBase(ctk.CTk):
+class ChoixDomaineApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("CPNV HUB - Sujet")
@@ -53,7 +46,7 @@ class ChoixBase(ctk.CTk):
         # Titre gauche
         ctk.CTkLabel(
             self.bg_label,
-            text="Forum Bases de donées",
+            text="Bienvenue sur CPNV HUB",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
@@ -96,8 +89,8 @@ class ChoixBase(ctk.CTk):
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            cursor="hand2",
-            command=lambda: retour(self),
+            cursor = "hand2",
+            command=self.appchange
         ).place(relx=0.05, rely=0.05, anchor="nw")
 
         # Bouton quitter
@@ -117,9 +110,9 @@ class ChoixBase(ctk.CTk):
         # Titre
         ctk.CTkLabel(
             self.card,
-            text="Veuillez choisir un sujet du\n"
-                 "domaine Sur les\n"
-                 "Bases de donées",
+            text="Veuillez choisir le domaine\n"
+                 "sur lequel vous souhaitez\n"
+                 "être conseillé",
             font=ctk.CTkFont(size=26, weight="bold"),
             text_color="white",
             justify="center"
@@ -140,14 +133,15 @@ class ChoixBase(ctk.CTk):
             "font": ctk.CTkFont(size=12, weight="bold")
         }
 
-        # Liste des sujets
         subjects = [
-            ("MCD", 0, 0),
-            ("MLD", 0, 1),
-            ("SQL", 1, 0),
+            ("Programmation", 0, 0),
+            ("Web", 0, 1),
+            ("Bases de données", 1, 0),
+            ("Systèmes & Réseaux", 1, 1),
+            ("Outils & Méthode", 2, 0),
+            ("Aide scolaire IT", 2, 1)
         ]
 
-        # Création des boutons
         for text, r, c in subjects:
             ctk.CTkButton(
                 self.buttons_frame,
@@ -156,7 +150,7 @@ class ChoixBase(ctk.CTk):
                 **btn_style
             ).grid(row=r, column=c, padx=20, pady=15)
 
-        # Aligner colonnes
+        # Aligner Java au centre
         self.buttons_frame.grid_columnconfigure(0, weight=1)
         self.buttons_frame.grid_columnconfigure(1, weight=1)
 
@@ -164,21 +158,43 @@ class ChoixBase(ctk.CTk):
     def ouvrir_sujet(self, sujet):
         print(f"Sujet choisi : {sujet}")
         # Ici, tu peux ouvrir la fenêtre correspondante
-        if sujet == "MCD":
+        if sujet == "Programmation":
             self.destroy()
-            from Frontend.Base_donee_dir.mcd import SujetsMCD
-            app = SujetsMCD()
+            from Frontend.Programmation import ChoixProg
+            app = ChoixProg()
             app.mainloop()
-        if sujet == "MLD":
+        if sujet == "Web":
             self.destroy()
-            from Frontend.Base_donee_dir.mld import SujetsMLD
-            app = SujetsMLD()
+            from Frontend.Web import ChoixWeb
+            app = ChoixWeb()
             app.mainloop()
-        if sujet == "SQL":
+        if sujet == "Bases de données":
             self.destroy()
-            from Frontend.Base_donee_dir.sql import SujetsSQL
-            app = SujetsSQL()
+            from Frontend.Base_donee import ChoixBase
+            app = ChoixBase()
             app.mainloop()
+        if sujet == "Systèmes & Réseaux":
+            self.destroy()
+            from Frontend.Systeme_et_Reseau import ChoixReseau
+            app = ChoixReseau()
+            app.mainloop()
+        if sujet == "Outils & Méthode":
+            self.destroy()
+            from Frontend.Outil_et_Methode import ChoixOutils
+            app = ChoixOutils()
+            app.mainloop()
+        if sujet == "Aide scolaire IT":
+            self.destroy()
+            from Frontend.Aide_scolaire_IT import ChoixAide
+            app = ChoixAide()
+            app.mainloop()
+
+    def appchange(self):
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.login import LoginApp  # Import local pour éviter la boucle
+        app = LoginApp()
+        app.mainloop()
+
 
     # === Resize background ===
     def _resize_bg(self, event):
@@ -207,5 +223,5 @@ class ChoixBase(ctk.CTk):
 
 
 if __name__ == "__main__":
-    app = ChoixBase()
+    app = ChoixDomaineApp()
     app.mainloop()
