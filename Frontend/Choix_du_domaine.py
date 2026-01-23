@@ -178,7 +178,7 @@ class ChoixDomaineApp(ctk.CTk):
             from Frontend.Systeme_et_Reseau import ChoixReseau
             app = ChoixReseau()
             app.mainloop()
-        if sujet == "Outils & Méthode":
+        if sujet == "Outils & Méthodes":
             self.destroy()
             from Frontend.Outil_et_Methode import ChoixOutils
             app = ChoixOutils()
