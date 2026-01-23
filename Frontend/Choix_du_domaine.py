@@ -5,14 +5,17 @@ Date de création : 16.01.2026
 """
 
 import customtkinter as ctk
+import os
 from PIL import Image
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
 
 class ChoixDomaineApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("CPNV HUB - Sujet")
+        self.title("CPNV HUB - Choix du Domaine")
         self.geometry("1100x700+400+150")
         self.minsize(900, 600)
 
@@ -26,7 +29,7 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.grid(row=0, column=0, sticky="nsew")
 
         # Background
-        self.bg_path = "Frontend/assets/left_background.jpg"
+        self.bg_path = os.path.join(ASSETS_DIR, "left_background.jpg")
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(self.left, text="")
@@ -34,8 +37,8 @@ class ChoixDomaineApp(ctk.CTk):
         self.left.bind("<Configure>", self._resize_bg)
 
         # Logo
-        logo = Image.open("Frontend/assets/Logo.png").convert("RGBA")
-        self.logo_img = ctk.CTkImage(logo, logo, size=(90, 80))
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
+        self.logo_img = ctk.CTkImage(logo, logo, size=(100, 50))
         ctk.CTkLabel(self.bg_label, image=self.logo_img, text="").place(
             relx=0.05, rely=0.05, anchor="nw"
         )
@@ -50,13 +53,13 @@ class ChoixDomaineApp(ctk.CTk):
             corner_radius=0,
             padx=20,
             pady=10,
-        ).place(relx=0.07, rely=0.32, anchor="w")
+        ).place(relx=0.05, rely=0.32, anchor="w")
 
         # Texte explicatif
         self.left_text = ctk.CTkFrame(
             self.bg_label, fg_color="#2f8f5b", corner_radius=0, border_color="#2f8f5b"
         )
-        self.left_text.place(relx=0.07, rely=0.53, relwidth=0.80, relheight=0.20)
+        self.left_text.place(relx=0.05, rely=0.53, relwidth=0.80, relheight=0.20)
 
         ctk.CTkLabel(
             self.left_text,
@@ -100,6 +103,16 @@ class ChoixDomaineApp(ctk.CTk):
             command=self.destroy
         ).place(relx=0.95, rely=0.05, anchor="ne")
 
+        # Bouton Gestion Utilisateur
+        ctk.CTkButton(
+            self.right,
+            text="Gestion Utilisateur",
+            width=100,
+            fg_color="#019136",
+            hover_color="#017a5c",
+            command=None
+        ).place(relx=0.05, rely=0.95, anchor="sw")
+
         # Carte de choix des sujets
         self.card = ctk.CTkFrame(self.right, fg_color="#7ac596", corner_radius=12)
         self.card.place(relx=0.5, rely=0.53, anchor="center", relwidth=0.75, relheight=0.75)
@@ -135,7 +148,7 @@ class ChoixDomaineApp(ctk.CTk):
             ("Web", 0, 1),
             ("Bases de données", 1, 0),
             ("Systèmes & Réseaux", 1, 1),
-            ("Outils & Méthode", 2, 0),
+            ("Outils & Méthodes", 2, 0),
             ("Aide scolaire IT", 2, 1)
         ]
 
@@ -157,33 +170,33 @@ class ChoixDomaineApp(ctk.CTk):
         # Ici, tu peux ouvrir la fenêtre correspondante
         if sujet == "Programmation":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Programmation import ChoixProg
+            app = ChoixProg()
             app.mainloop()
         if sujet == "Web":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Web import ChoixWeb
+            app = ChoixWeb()
             app.mainloop()
         if sujet == "Bases de données":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Base_donee import ChoixBase
+            app = ChoixBase()
             app.mainloop()
         if sujet == "Systèmes & Réseaux":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Systeme_et_Reseau import ChoixReseau
+            app = ChoixReseau()
             app.mainloop()
-        if sujet == "Outils & Méthode":
+        if sujet == "Outils & Méthodes":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Outil_et_Methode import ChoixOutils
+            app = ChoixOutils()
             app.mainloop()
         if sujet == "Aide scolaire IT":
             self.destroy()
-            from Frontend.Choix_du_sujet import ChoixApp
-            app = ChoixApp()
+            from Frontend.Aide_scolaire_IT import ChoixAide
+            app = ChoixAide()
             app.mainloop()
 
     def appchange(self):

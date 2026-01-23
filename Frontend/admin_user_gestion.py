@@ -33,7 +33,7 @@ class AdminDashboard(ctk.CTk):
         self.logo.pack(fill="x", padx=10, pady=20)
 
         try:
-            logo_img = ctk.CTkImage(Image.open("assets/logo.png"), size=(80, 70))
+            logo_img = ctk.CTkImage(Image.open("assets/Logo.jpg"), size=(80, 70))
             ctk.CTkLabel(self.logo, image=logo_img, text="").place(relx=0.5, rely=0.5, anchor="center")
         except:
             ctk.CTkLabel(self.logo, text="LOGO", text_color="black").place(relx=0.5, rely=0.5, anchor="center")

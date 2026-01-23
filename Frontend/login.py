@@ -2,10 +2,18 @@
 Nom du fichier   : login.py
 Auteur           : Joel Cunha Faria
 Date de création : 15.01.2026
+Date de modification : 23.01.2026
+
 """
+
 import customtkinter as ctk
+import os
 from PIL import Image
 from Frontend.signup import *
+from CTkMessagebox import CTkMessagebox
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
 
 class LoginApp(ctk.CTk):
@@ -24,7 +32,7 @@ class LoginApp(ctk.CTk):
         self.left = ctk.CTkFrame(self, corner_radius=0)
         self.left.grid(row=0, column=0, sticky="nsew")
 
-        self.bg_path = "Frontend/assets/left_background.jpg"
+        self.bg_path = os.path.join(ASSETS_DIR, "left_background.jpg")
         self._bg_pil = Image.open(self.bg_path)
 
         self.bg_label = ctk.CTkLabel(
@@ -40,11 +48,11 @@ class LoginApp(ctk.CTk):
         ))
 
         # === LOGO ===
-        logo_pil = Image.open("Frontend/assets/Logo.png").convert("RGBA")
+        logo = Image.open(os.path.join(ASSETS_DIR, "Logo.jpg")).convert("RGBA")
         self.logo_ctk = ctk.CTkImage(
-            light_image=logo_pil,
-            dark_image=logo_pil,
-            size=(100, 90),
+            light_image=logo,
+            dark_image=logo,
+            size=(100, 50),
 
         )
 
@@ -55,7 +63,7 @@ class LoginApp(ctk.CTk):
             bg_color="white",
             fg_color="white",
         )
-        self.logo_label.place(relx=0.05, rely=0.06, anchor="nw")
+        self.logo_label.place(relx=0.05, rely=0.05, anchor="nw")
 
         self.left_title = ctk.CTkLabel(
             self.bg_label,
@@ -172,10 +180,24 @@ class LoginApp(ctk.CTk):
         self.bg_label.configure(image=self.bg_ctk)
 
     def on_login(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local pour éviter la boucle
-        app = ChoixDomaineApp()
-        app.mainloop()
+        login = self.entry_user.get()
+        password = self.entry_pass.get()
+
+        from Backend.Services.auth_service import AuthService
+
+        success, result = AuthService.login(login, password)
+
+        if success:
+            self.destroy()  # Ferme la fenêtre Signup
+            from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
+            app = ChoixDomaineApp()
+            app.mainloop()
+        else:
+            CTkMessagebox(
+                title="Erreur",
+                message=result,
+                icon="cancel"
+            )
 
     def on_signup(self):
         self.destroy()  # Ferme la fenêtre Login
