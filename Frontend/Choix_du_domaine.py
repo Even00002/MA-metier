@@ -11,6 +11,7 @@ from PIL import Image
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
+
 class ChoixDomaineApp(ctk.CTk):
     def __init__(self):
         super().__init__()
