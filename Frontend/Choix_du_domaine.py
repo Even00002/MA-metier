@@ -103,6 +103,16 @@ class ChoixDomaineApp(ctk.CTk):
             command=self.destroy
         ).place(relx=0.95, rely=0.05, anchor="ne")
 
+        # Bouton Gestion Utilisateur
+        ctk.CTkButton(
+            self.right,
+            text="Gestion Utilisateur",
+            width=100,
+            fg_color="#019136",
+            hover_color="#017a5c",
+            command=None
+        ).place(relx=0.05, rely=0.95, anchor="sw")
+
         # Carte de choix des sujets
         self.card = ctk.CTkFrame(self.right, fg_color="#7ac596", corner_radius=12)
         self.card.place(relx=0.5, rely=0.53, anchor="center", relwidth=0.75, relheight=0.75)
