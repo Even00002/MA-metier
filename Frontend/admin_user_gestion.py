@@ -7,6 +7,8 @@ Date de création : 21.01.2026
 import customtkinter as ctk
 from PIL import Image
 import os
+
+from Frontend.admin_validation import ValidationPage
 from Frontend.popups import ActionPopup, HistoryPopup
 
 ctk.set_appearance_mode("light")
@@ -37,37 +39,48 @@ class AdminDashboard(ctk.CTk):
             ctk.CTkLabel(self.logo, text="LOGO", text_color="black").place(relx=0.5, rely=0.5, anchor="center")
 
         # Boutons Sidebar
-        self.btn_gestion = ctk.CTkButton(self.sidebar, text="Gestion des utilisateurs", fg_color="#3fa863", hover_color="#2d7a47", height=40)
+        self.btn_gestion = ctk.CTkButton(self.sidebar, text="Gestion des utilisateurs", fg_color="#3fa863", hover_color="#2d7a47", height=40, command=self.show_gestion)
         self.btn_gestion.pack(padx=10, pady=10, fill="x")
 
-        self.btn_validation = ctk.CTkButton(self.sidebar, text="Validation", fg_color="#2d7a47", hover_color="#1E5235", height=40)
+        self.btn_validation = ctk.CTkButton(self.sidebar, text="Validation", fg_color="#2d7a47", hover_color="#1E5235", height=40, command=self.open_validation_page)
         self.btn_validation.pack(padx=10, pady=5, fill="x")
 
-        #========= CONTENU (DROITE) ===========
-        self.main_area = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
-        self.main_area.grid(row=0, column=1, sticky="nsew")
+        #========= CONTENEUR DE PAGES (DROITE) ===========
+        self.container = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
+        self.container.grid(row=0, column=1, sticky="nsew")
+
+        # Initialisation de la page de gestion (Main Area)
+        self.main_area = self.create_main_area()
+        # Initialisation de la page de validation
+        self.validation_view = ValidationPage(self.container, self)
+
+        # Affichage par défaut
+        self.show_gestion()
+
+    def create_main_area(self):
+        frame = ctk.CTkFrame(self.container, fg_color="white", corner_radius=0)
 
         # Header
-        self.top_bar = ctk.CTkFrame(self.main_area, fg_color="transparent")
-        self.top_bar.pack(fill="x", padx=20, pady=20)
-        ctk.CTkButton(self.top_bar, text="← Retour", fg_color="#019136", width=100).pack(side="left")
-        ctk.CTkButton(self.top_bar, text="Quitter", fg_color="#019136", width=100, command=self.destroy).pack(side="right")
+        top_bar = ctk.CTkFrame(frame, fg_color="transparent")
+        top_bar.pack(fill="x", padx=20, pady=20)
+        ctk.CTkButton(top_bar, text="← Retour", fg_color="#019136", width=100).pack(side="left")
+        ctk.CTkButton(top_bar, text="Quitter", fg_color="#019136", width=100, command=self.destroy).pack(side="right")
 
         # Recherche
-        self.search_bar = ctk.CTkEntry(self.main_area, placeholder_text="Rechercher...", height=40, fg_color="#86c49c", border_width=0, text_color="white", placeholder_text_color="#eeeeee")
+        self.search_bar = ctk.CTkEntry(frame, placeholder_text="Rechercher...", height=40, fg_color="#86c49c", border_width=0, text_color="white", placeholder_text_color="#eeeeee")
         self.search_bar.pack(fill="x", padx=20, pady=(0, 20))
 
         #=========== TABLEAU =============
-        self.header_frame = ctk.CTkFrame(self.main_area, fg_color="#019136", corner_radius=5, height=50)
-        self.header_frame.pack(fill="x", padx=20, pady=5)
+        header_frame = ctk.CTkFrame(frame, fg_color="#019136", corner_radius=5, height=50)
+        header_frame.pack(fill="x", padx=20, pady=5)
 
         self.columns_config = [("Username", 1), ("Email", 2), ("Date de naissance", 1), ("Création compte", 1), ("Role", 0.5), ("Actions", 2.5)]
 
         for i, (col_name, weight) in enumerate(self.columns_config):
-            self.header_frame.grid_columnconfigure(i, weight=int(weight * 10))
-            ctk.CTkLabel(self.header_frame, text=col_name, text_color="white", font=("Arial", 13, "bold")).grid(row=0, column=i, pady=10)
+            header_frame.grid_columnconfigure(i, weight=int(weight * 10))
+            ctk.CTkLabel(header_frame, text=col_name, text_color="white", font=("Arial", 13, "bold")).grid(row=0, column=i, pady=10)
 
-        self.scroll_frame = ctk.CTkScrollableFrame(self.main_area, fg_color="transparent")
+        self.scroll_frame = ctk.CTkScrollableFrame(frame, fg_color="transparent")
         self.scroll_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
         # Données
@@ -80,13 +93,19 @@ class AdminDashboard(ctk.CTk):
 
         for user in users_data:
             self.add_user_row(user)
+        return frame
+
+    def show_gestion(self):
+        self.validation_view.pack_forget()
+        self.main_area.pack(fill="both", expand=True)
+
+    def open_validation_page(self):
+        self.main_area.pack_forget()
+        self.validation_view.pack(fill="both", expand=True)
 
     def add_user_row(self, user_data):
         username, email, dob, created, role, warns = user_data
-
-        # État spécifique à cette ligne
         state = {"ban": 0, "mute": 0}
-
         row = ctk.CTkFrame(self.scroll_frame, fg_color="#86c49c", corner_radius=5)
         row.pack(fill="x", pady=5)
 
@@ -105,31 +124,22 @@ class AdminDashboard(ctk.CTk):
 
         btn_ban = ctk.CTkButton(actions_frame, width=60)
         btn_ban.pack(side="left", padx=2)
-
         btn_mute = ctk.CTkButton(actions_frame, width=60)
         btn_mute.pack(side="left", padx=2)
 
         def refresh_buttons():
-            # Logique Ban (Vert si non-banni, Rouge si banni)
             if state["ban"] == 1:
-                btn_ban.configure(text="Unban", fg_color="#A20909", hover_color="#8b0808",
-                                  command=lambda: ActionPopup(self, "Unban", username, state, "ban", refresh_buttons))
+                btn_ban.configure(text="Unban", fg_color="#A20909", command=lambda: ActionPopup(self, "Unban", username, state, "ban", refresh_buttons))
             else:
-                btn_ban.configure(text="Ban", fg_color="#019136", hover_color="#017a2d",
-                                  command=lambda: ActionPopup(self, "Ban", username, state, "ban", refresh_buttons))
+                btn_ban.configure(text="Ban", fg_color="#019136", command=lambda: ActionPopup(self, "Ban", username, state, "ban", refresh_buttons))
 
-            # Logique Mute (Vert si non-muté, Rouge si muté)
             if state["mute"] == 1:
-                btn_mute.configure(text="Unmute", fg_color="#A20909", hover_color="#8b0808",
-                                   command=lambda: ActionPopup(self, "Unmute", username, state, "mute", refresh_buttons))
+                btn_mute.configure(text="Unmute", fg_color="#A20909", command=lambda: ActionPopup(self, "Unmute", username, state, "mute", refresh_buttons))
             else:
-                btn_mute.configure(text="Mute", fg_color="#019136", hover_color="#017a2d",
-                                   command=lambda: ActionPopup(self, "Mute", username, state, "mute", refresh_buttons))
+                btn_mute.configure(text="Mute", fg_color="#019136", command=lambda: ActionPopup(self, "Mute", username, state, "mute", refresh_buttons))
 
         refresh_buttons()
-
-        ctk.CTkButton(actions_frame, text=f"Voir l'historique ({warns})", fg_color="#019136", width=120,
-                     command=lambda: HistoryPopup(self, username, [])).pack(side="left", padx=2)
+        ctk.CTkButton(actions_frame, text=f"Voir l'historique ({warns})", fg_color="#019136", width=120, command=lambda: HistoryPopup(self, username, [])).pack(side="left", padx=2)
 
 if __name__ == "__main__":
     app = AdminDashboard()

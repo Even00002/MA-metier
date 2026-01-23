@@ -83,3 +83,39 @@ class HistoryPopup(ctk.CTkToplevel):
 
         if not history_data:
             ctk.CTkLabel(self.scroll_area, text="Aucun historique.", text_color="black").pack(pady=20)
+
+    import customtkinter as ctk
+
+class ValidationPopup(ctk.CTkToplevel):
+    def __init__(self, parent, data):
+        super().__init__(parent)
+        titre, user, date, type_v = data
+        self.geometry("600x550")
+        self.config(background="#019136")
+        self.attributes("-topmost", True)
+
+        # Header
+        lbl_titre = ctk.CTkLabel(self, text=titre, font=("Arial", 20, "bold"), text_color="white")
+        lbl_titre.pack(pady=(20, 5), padx=20, anchor="w")
+
+        ctk.CTkLabel(self, text=f"Par : {user}\nSoumis le : {date}", text_color="white", justify="left").pack(
+            padx=20, anchor="w")
+
+        # Zone grise
+        box = ctk.CTkFrame(self, fg_color="#E0E0E0", corner_radius=15)
+        box.pack(fill="both", expand=True, padx=20, pady=20)
+
+        if type_v == "Edit":
+            ctk.CTkLabel(box, text="Ancien contenu :", text_color="black").pack(pady=5)
+            ctk.CTkTextbox(box, height=100, width=500).pack(pady=5)
+            ctk.CTkLabel(box, text="Nouveau contenu :", text_color="black").pack(pady=5)
+            ctk.CTkTextbox(box, height=100, width=500).pack(pady=5)
+        else:
+            ctk.CTkTextbox(box, height=300, width=500).pack(pady=20)
+
+        # Boutons
+        btn_f = ctk.CTkFrame(self, fg_color="transparent")
+        btn_f.pack(fill="x", side="bottom", pady=20)
+        ctk.CTkButton(btn_f, text="Refuser", fg_color="#bd0000", width=200, command=self.destroy).pack(side="left",
+                                                                                                       padx=40)
+        ctk.CTkButton(btn_f, text="Valider", fg_color="#00a335", width=200).pack(side="right", padx=40)
