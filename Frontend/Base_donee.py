@@ -53,20 +53,20 @@ class ChoixBase(ctk.CTk):
         # Titre gauche
         ctk.CTkLabel(
             self.bg_label,
-            text="Forum Bases de donées",
+            text="Forum Base de données",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
             corner_radius=0,
             padx=20,
             pady=10,
-        ).place(relx=0.07, rely=0.32, anchor="w")
+        ).place(relx=0.05, rely=0.20, anchor="w")
 
         # Texte explicatif
         self.left_text = ctk.CTkFrame(
-            self.bg_label, fg_color="#2f8f5b", corner_radius=0, border_color="#2f8f5b"
+            self.bg_label, fg_color="#2f8f5b", corner_radius=0, border_color="black", border_width=2
         )
-        self.left_text.place(relx=0.07, rely=0.53, relwidth=0.80, relheight=0.20)
+        self.left_text.place(relx=0.05, rely=0.30, relwidth=0.80, relheight=0.60)
 
         ctk.CTkLabel(
             self.left_text,
@@ -83,7 +83,7 @@ class ChoixBase(ctk.CTk):
             text_color="white",
             justify="left",
             fg_color="#2f8f5b",
-        ).pack(anchor="w")
+        ).pack(anchor="w", padx=2, pady=2)
 
         # ================= DROITE =================
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)

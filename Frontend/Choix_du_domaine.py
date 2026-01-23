@@ -53,13 +53,13 @@ class ChoixDomaineApp(ctk.CTk):
             corner_radius=0,
             padx=20,
             pady=10,
-        ).place(relx=0.07, rely=0.32, anchor="w")
+        ).place(relx=0.05, rely=0.32, anchor="w")
 
         # Texte explicatif
         self.left_text = ctk.CTkFrame(
             self.bg_label, fg_color="#2f8f5b", corner_radius=0, border_color="#2f8f5b"
         )
-        self.left_text.place(relx=0.07, rely=0.53, relwidth=0.80, relheight=0.20)
+        self.left_text.place(relx=0.05, rely=0.53, relwidth=0.80, relheight=0.20)
 
         ctk.CTkLabel(
             self.left_text,

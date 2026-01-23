@@ -49,27 +49,23 @@ class SujetsMCD(ctk.CTk):
             relx=0.05, rely=0.05, anchor="nw"
         )
 
-        # Titre gauche (bande verte)
-        self.left_title = ctk.CTkLabel(
+        # Titre gauche
+        ctk.CTkLabel(
             self.bg_label,
-            text="Forum Programmation",
+            text="Forum Base de données",
             font=ctk.CTkFont(size=34, weight="bold"),
             text_color="white",
             fg_color="#2f8f5b",
             corner_radius=0,
             padx=20,
-            pady=8,
-        )
-        self.left_title.place(relx=0.07, rely=0.40, anchor="w")
+            pady=10,
+        ).place(relx=0.05, rely=0.20, anchor="w")
 
-        # Texte encadré
+        # Texte explicatif
         self.left_text = ctk.CTkFrame(
-            self.bg_label,
-            fg_color="#2f8f5b",
-            corner_radius=0,
-            border_width=0
+            self.bg_label, fg_color="#2f8f5b", corner_radius=0, border_color="black", border_width=2
         )
-        self.left_text.place(relx=0.07, rely=0.48, relwidth=0.8)
+        self.left_text.place(relx=0.05, rely=0.30, relwidth=0.80, relheight=0.60)
 
         ctk.CTkLabel(
             self.left_text,
@@ -78,14 +74,15 @@ class SujetsMCD(ctk.CTk):
                 "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n"
                 "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n"
                 "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum\n"
-                "dolore eu fugiat nulla pariatur."
+                "dolore eu fugiat nulla pariatur.\n"
+                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia\n"
+                "deserunt mollit anim id est laborum."
             ),
+            font=ctk.CTkFont(size=13),
             text_color="white",
-            font=ctk.CTkFont(size=12),
             justify="left",
-            padx=12,
-            pady=12
-        ).pack()
+            fg_color="#2f8f5b",
+        ).pack(anchor="w", padx=2, pady=2)
 
         # ================= DROITE =================
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
