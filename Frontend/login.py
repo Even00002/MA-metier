@@ -2,13 +2,15 @@
 Nom du fichier   : login.py
 Auteur           : Joel Cunha Faria
 Date de création : 15.01.2026
-"""
+Date de modification : 23.01.2026
 
+"""
 
 import customtkinter as ctk
 import os
 from PIL import Image
 from Frontend.signup import *
+from CTkMessagebox import CTkMessagebox
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -97,13 +99,6 @@ class LoginApp(ctk.CTk):
         for widget in self.right.winfo_children():
             widget.destroy()
 
-    # === MODIFICATION DE appchange ===
-    def appchange(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
-        app = SignupApp()
-        app.mainloop()
-
     def show_login_page(self):
         global show_login_page
 
@@ -163,7 +158,7 @@ class LoginApp(ctk.CTk):
 
         ctk.CTkLabel(self.signup_card, text="Pas encore de compte ?", text_color="white").grid(row=0, padx=20, pady=5)
         ctk.CTkButton(self.signup_card, text="SIGN UP", height=42, fg_color="#019136",
-                      command=self.appchange).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
+                      command=self.on_signup).grid(row=1, padx=20, pady=(0, 14), sticky="ew")
 
 
 
@@ -185,14 +180,31 @@ class LoginApp(ctk.CTk):
         self.bg_label.configure(image=self.bg_ctk)
 
     def on_login(self):
-        print("Compte créé (simulé)")
-        self.destroy()  # Ferme la fenêtre Signup
-        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
-        app = ChoixDomaineApp()
-        app.mainloop()
+        login = self.entry_user.get()
+        password = self.entry_pass.get()
+
+        from Backend.Services.auth_service import AuthService
+
+        success, result = AuthService.login(login, password)
+
+        if success:
+            self.destroy()  # Ferme la fenêtre Signup
+            from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
+            app = ChoixDomaineApp()
+            app.mainloop()
+        else:
+            CTkMessagebox(
+                title="Erreur",
+                message=result,
+                icon="cancel"
+            )
 
     def on_signup(self):
-        print("Compte créé (simulé)")
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.signup import SignupApp  # Import local pour éviter la boucle
+        app = SignupApp()
+        app.mainloop()
+
 
 if __name__ == "__main__":
     app = LoginApp()
