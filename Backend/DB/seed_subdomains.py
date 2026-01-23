@@ -49,8 +49,34 @@ def add_subdomain(domain_name: str, sub_name: str, information: str):
         print(f"Ajouté : {sub_name} → {domain_name}")
 
 if __name__ == "__main__":
+    # ---- Programmation ----
     add_subdomain("Programmation", "Python", "")
     add_subdomain("Programmation", "C#", "")
     add_subdomain("Programmation", "JavaScript", "")
     add_subdomain("Programmation", "C++", "")
     add_subdomain("Programmation", "Java", "")
+
+    # ---- Web ----
+    add_subdomain("Web", "HTML", "")
+    add_subdomain("Web", "CSS", "")
+    add_subdomain("Web", "JavaScript", "")
+
+    # ---- Base de données ----
+    add_subdomain("Base de données", "MCD", "")
+    add_subdomain("Base de données", "MLD", "")
+    add_subdomain("Base de données", "SQL", "")
+
+    # ---- Systèmes & Réseaux ----
+    add_subdomain("Systèmes & Réseaux", "Paramètres", "")
+    add_subdomain("Systèmes & Réseaux", "Invite de commande", "")
+    add_subdomain("Systèmes & Réseaux", "Réseau", "")
+    add_subdomain("Systèmes & Réseaux", "Gestion d'ordinateur", "")
+
+    # ---- Outils & Méthodes ----
+    add_subdomain("Outils & Méthodes", "Lien du CPNV", "")
+    add_subdomain("Outils & Méthodes", "Lien de l'intranet", "")
+
+    # ---- Aide scolaire IT ----
+    add_subdomain("Aide scolaire IT", "Lien du Memento", "")
+    add_subdomain("Aide scolaire IT", "Lien pour du Soutien", "")
+    add_subdomain("Aide scolaire IT", "Lien pour le Règlement", "")

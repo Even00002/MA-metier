@@ -10,3 +10,5 @@ Développement d'une application d'entraide python
 - customtkinter : `pip install customtkinter`
 - SQLAlchemy : `pip install SQLAlchemy`
 - pillow : `pip install pillow`
+- CTkMessagebox : `pip install CTkMessagebox`
+
