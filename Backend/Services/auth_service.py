@@ -4,23 +4,26 @@ Auteur : Joel Cunha Faria
 Date de création : 23.01.2026
 Date de modification : 23.01.2026
 """
-from sqlalchemy import select
+from sqlalchemy.orm import Session
 from Backend.DB.db_schema import engine
 from Backend.Class.Class_User import User
+from sqlalchemy import select
 
 class AuthService:
 
     @staticmethod
     def login(login: str, password: str):
-        with engine.begin() as conn:
+        with Session(engine) as session:
             stmt = select(User).where(
                 (User.email == login) | (User.username == login)
             )
 
-            user = conn.execute(stmt).scalar_one_or_none()
+            user = session.execute(stmt).scalar_one_or_none()
 
             if user is None:
                 return False, "Utilisateur introuvable"
+
+            print("USER TROUVÉ :", user)
 
             if user.password != password:
                 return False, "Mot de passe incorrect"
