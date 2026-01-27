@@ -2,6 +2,7 @@
 Nom du fichier : admin_user_gestion.py
 Auteur : Furkan Yilmaz
 Date de création : 21.01.2026
+Dernier changement : 27.01.2026
 """
 
 import customtkinter as ctk
