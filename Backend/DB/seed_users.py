@@ -10,7 +10,7 @@ from db_schema import engine
 from Backend.Class.Class_User import User
 from datetime import date, datetime
 
-def add_users(username: str, password: str, email: str, birthdate: date, role: str):
+def add_users(username: str, password: str, email: str, birthdate: date, role: str, is_banned: bool, is_muted: bool):
     with engine.begin() as conn:
         exists = conn.execute(
             select(User.id).where(User.username == username)
@@ -20,23 +20,23 @@ def add_users(username: str, password: str, email: str, birthdate: date, role: s
             return
 
         conn.execute(
-            insert(User).values(username=username, password=password, email=email, birthdate=birthdate, role=role)
+            insert(User).values(username=username, password=password, email=email, birthdate=birthdate, role=role, is_banned=is_banned, is_muted=is_muted)
         )
         print(f"Ajouté: {username}")
 
 if __name__ == "__main__":
     # ---- ADMINS ----
     birthdate = datetime.strptime("01-02-2009", "%d-%m-%Y").date()
-    add_users("py18uam", "Pa$$w0rd", "py18uam@eduvaud.ch", birthdate, "admin")
+    add_users("py18uam", "Pa$$w0rd", "py18uam@eduvaud.ch", birthdate, "admin", False, False)
 
     birthdate = datetime.strptime("13-06-2010", "%d-%m-%Y").date()
-    add_users("pv60kfh", "Pa$$w0rd", "pv60kfh@eduvaud.ch", birthdate, "admin")
+    add_users("pv60kfh", "Pa$$w0rd", "pv60kfh@eduvaud.ch", birthdate, "admin", False, False)
 
     birthdate = datetime.strptime("16-02-2006", "%d-%m-%Y").date()
-    add_users("pm11mjh", "Pa$$w0rd", "pm11mjh@eduvaud.ch", birthdate, "admin")
+    add_users("pm11mjh", "Pa$$w0rd", "pm11mjh@eduvaud.ch", birthdate, "admin", False, False)
 
     birthdate = datetime.strptime("23-12-2008", "%d-%m-%Y").date()
-    add_users("pd51emw", "Pa$$w0rd", "pd51emw@eduvaud.ch", birthdate, "admin")
+    add_users("pd51emw", "Pa$$w0rd", "pd51emw@eduvaud.ch", birthdate, "admin", False, False)
 
     # ---- MEMBRES ----
     membres = [
@@ -90,4 +90,4 @@ if __name__ == "__main__":
 
     for u in membres:
         birthdate = datetime.strptime(u[1], "%d-%m-%Y").date()
-        add_users(u[0], "Pa$$w0rd", f"{u[0]}@eduvaud.ch", birthdate, "membre")
+        add_users(u[0], "Pa$$w0rd", f"{u[0]}@eduvaud.ch", birthdate, "membre", False, False)
