@@ -11,6 +11,8 @@ import os
 from PIL import Image
 from Frontend.signup import *
 from CTkMessagebox import CTkMessagebox
+import Backend.session as session
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -188,6 +190,8 @@ class LoginApp(ctk.CTk):
         success, result = AuthService.login(login, password)
 
         if success:
+            session.current_user = result
+
             self.destroy()  # Ferme la fenêtre Signup
             from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
             app = ChoixDomaineApp()

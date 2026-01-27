@@ -7,6 +7,7 @@ Date de création : 16.01.2026
 import customtkinter as ctk
 import os
 from PIL import Image
+import Backend.session as session
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")

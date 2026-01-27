@@ -2,6 +2,7 @@ import customtkinter as ctk
 import os
 from PIL import Image
 from Frontend.login import *
+from CTkMessagebox import CTkMessagebox
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -119,8 +120,9 @@ class SignupApp(ctk.CTk):
             text_color="white"
         ).grid(row=1, column=0, sticky="w", padx=20, pady=(4, 0))
 
-        ctk.CTkEntry(self.reg_card, height=40, width=350,
-                     fg_color="white", corner_radius=5).grid(row=2, column=0, pady=3, padx=20)
+        self.entry_username = ctk.CTkEntry(self.reg_card, height=40, width=350, fg_color="white")
+        self.entry_username.grid(row=2, column=0, pady=3, padx=20)
+
         ctk.CTkLabel(
             self.reg_card,
             text="Adresse email",
@@ -128,8 +130,8 @@ class SignupApp(ctk.CTk):
             text_color="white"
         ).grid(row=3, column=0, sticky="w", padx=20, pady=(4, 0))
 
-        ctk.CTkEntry(self.reg_card, height=40, width=350,
-                     fg_color="white", corner_radius=5).grid(row=4, column=0, pady=3, padx=20)
+        self.entry_email = ctk.CTkEntry(self.reg_card, height=40, width=350, fg_color="white", corner_radius=5)
+        self.entry_email.grid(row=4, column=0, pady=3, padx=20)
 
         ctk.CTkLabel(
             self.reg_card,
@@ -138,8 +140,8 @@ class SignupApp(ctk.CTk):
             text_color="white"
         ).grid(row=5, column=0, sticky="w", padx=20, pady=(4, 0))
 
-        ctk.CTkEntry(self.reg_card, height=40, width=350,
-                     fg_color="white", corner_radius=5).grid(row=6, column=0, pady=3, padx=20)
+        self.entry_birthdate = ctk.CTkEntry(self.reg_card, height=40, width=350, fg_color="white", corner_radius=5)
+        self.entry_birthdate.grid(row=6, column=0, pady=3, padx=20)
 
         ctk.CTkLabel(
             self.reg_card,
@@ -148,8 +150,8 @@ class SignupApp(ctk.CTk):
             text_color="white"
         ).grid(row=7, column=0, sticky="w", padx=20, pady=(4, 0))
 
-        ctk.CTkEntry(self.reg_card, show="*", height=40, width=350,
-                     fg_color="white").grid(row=8, column=0, pady=3, padx=20)
+        self.entry_password = ctk.CTkEntry(self.reg_card, show="*", height=40, width=350, fg_color="white")
+        self.entry_password.grid(row=8, column=0, pady=3, padx=20)
 
         ctk.CTkLabel(
             self.reg_card,
@@ -158,8 +160,8 @@ class SignupApp(ctk.CTk):
             text_color="white"
         ).grid(row=9, column=0, sticky="w", padx=20, pady=(4, 0))
 
-        ctk.CTkEntry(self.reg_card, show="*", height=40, width=350,
-                     fg_color="white").grid(row=10, column=0, pady=3, padx=20)
+        self.entry_password_confirm = ctk.CTkEntry(self.reg_card, show="*", height=40, width=350, fg_color="white")
+        self.entry_password_confirm.grid(row=10, column=0, pady=3, padx=20)
 
         ctk.CTkButton(self.reg_card, text="S'INSCRIRE", fg_color="#019136", height=45,
                       command=self.on_signup).grid(row=11, column=0, pady=25, padx=20, sticky="ew")
@@ -182,11 +184,45 @@ class SignupApp(ctk.CTk):
         self.bg_label.configure(image=self.bg_ctk)
 
     def on_signup(self):
-        print("Compte créé (simulé)")
-        self.destroy()  # Ferme la fenêtre Signup
-        from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
-        app = ChoixDomaineApp()
-        app.mainloop()
+        username = self.entry_username.get()
+        email = self.entry_email.get()
+        birthdate = self.entry_birthdate.get()
+        password = self.entry_password.get()
+        confirm = self.entry_password_confirm.get()
+
+        if not all([username, email, birthdate, password, confirm]):
+            CTkMessagebox(title="Erreur", message="Tous les champs sont obligatoires", icon="cancel")
+            return
+
+        if password != confirm:
+            CTkMessagebox(title="Erreur", message="Les mots de passe ne correspondent pas", icon="cancel")
+            return
+
+        from Backend.Services.auth_service import AuthService
+        import Backend.session as session
+
+        success, result = AuthService.signup(
+            username, email, birthdate, password
+        )
+
+        if success:
+            session.current_user = result  # 👈 USER stocké
+
+            CTkMessagebox(
+                title="Succès",
+                message="Compte créé avec succès",
+                icon="check"
+            )
+
+            self.withdraw()
+            from Frontend.Choix_du_domaine import ChoixDomaineApp
+            app = ChoixDomaineApp()
+            app.mainloop()
+
+        else:
+            CTkMessagebox(title="Erreur", message=result, icon="cancel")
+
+
 # --- CORRECTION INDENTATION ---
 if __name__ == "__main__":
     app = SignupApp()
