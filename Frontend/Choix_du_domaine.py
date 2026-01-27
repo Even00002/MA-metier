@@ -111,7 +111,7 @@ class ChoixDomaineApp(ctk.CTk):
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",
-            command=None
+            command=self.appgestionuser
         ).place(relx=0.05, rely=0.95, anchor="sw")
 
         # Carte de choix des sujets
@@ -204,6 +204,12 @@ class ChoixDomaineApp(ctk.CTk):
         self.destroy()  # Ferme la fenêtre Login
         from Frontend.login import LoginApp  # Import local pour éviter la boucle
         app = LoginApp()
+        app.mainloop()
+
+    def appgestionuser(self):
+        self.destroy()  # Ferme la fenêtre Login
+        from Frontend.admin_user_gestion import AdminDashboard  # Import local pour éviter la boucle
+        app = AdminDashboard()
         app.mainloop()
 
 

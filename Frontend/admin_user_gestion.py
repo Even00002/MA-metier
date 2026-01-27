@@ -12,7 +12,10 @@ import os
 from Frontend.admin_validation import ValidationPage
 from Frontend.popups import ActionPopup, HistoryPopup
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 ctk.set_appearance_mode("light")
+
 
 class AdminDashboard(ctk.CTk):
     def __init__(self):
@@ -25,19 +28,27 @@ class AdminDashboard(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
 
         # ========== SIDEBAR (GAUCHE) ===========
+        # Couleur de la sidebar : #1E5235
         self.sidebar = ctk.CTkFrame(self, fg_color="#1E5235", corner_radius=0, width=250)
         self.sidebar.grid(row=0, column=0, sticky="nsew")
         self.sidebar.grid_propagate(False)
 
-        # Logo
-        self.logo = ctk.CTkFrame(self.sidebar, fg_color="#C89F65", height=120, corner_radius=5, border_width=2, border_color="#5C4033")
-        self.logo.pack(fill="x", padx=10, pady=20)
+        # Logo - Correction pour enlever le cadre marron
+        # On met le fg_color identique à la sidebar (#1E5235) pour qu'il soit invisible
+        self.logo_container = ctk.CTkFrame(self.sidebar, fg_color="#1E5235", height=100, corner_radius=0)
+        self.logo_container.pack(fill="x", padx=10, pady=(20, 10))
 
         try:
-            logo_img = ctk.CTkImage(Image.open("assets/Logo.jpg"), size=(80, 70))
-            ctk.CTkLabel(self.logo, image=logo_img, text="").place(relx=0.5, rely=0.5, anchor="center")
-        except:
-            ctk.CTkLabel(self.logo, text="LOGO", text_color="black").place(relx=0.5, rely=0.5, anchor="center")
+            logo_path = os.path.join(ASSETS_DIR, "Logo.jpg")
+            img = Image.open(logo_path)
+            # On ajuste la taille pour qu'il ne soit pas trop écrasé
+            self.logo_image = ctk.CTkImage(light_image=img, dark_image=img, size=(160, 80))
+
+            self.logo_label = ctk.CTkLabel(self.logo_container, image=self.logo_image, text="")
+            self.logo_label.pack(expand=True)
+        except Exception as e:
+            print(f"Erreur logo: {e}")
+            ctk.CTkLabel(self.logo_container, text="CPNV HUB", text_color="white", font=("Arial", 16, "bold")).pack(expand=True)
 
         # Boutons Sidebar
         self.btn_gestion = ctk.CTkButton(self.sidebar, text="Gestion des utilisateurs", fg_color="#3fa863", hover_color="#2d7a47", height=40, command=self.show_gestion)
@@ -50,9 +61,8 @@ class AdminDashboard(ctk.CTk):
         self.container = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
         self.container.grid(row=0, column=1, sticky="nsew")
 
-        # Initialisation de la page de gestion (Main Area)
+        # Initialisation des vues
         self.main_area = self.create_main_area()
-        # Initialisation de la page de validation
         self.validation_view = ValidationPage(self.container, self)
 
         # Affichage par défaut
@@ -64,7 +74,7 @@ class AdminDashboard(ctk.CTk):
         # Header
         top_bar = ctk.CTkFrame(frame, fg_color="transparent")
         top_bar.pack(fill="x", padx=20, pady=20)
-        ctk.CTkButton(top_bar, text="← Retour", fg_color="#019136", width=100).pack(side="left")
+        ctk.CTkButton(top_bar, text="← Retour", fg_color="#019136", width=100, command=self.retourchoixdomaine).pack(side="left")
         ctk.CTkButton(top_bar, text="Quitter", fg_color="#019136", width=100, command=self.destroy).pack(side="right")
 
         # Recherche
@@ -84,7 +94,7 @@ class AdminDashboard(ctk.CTk):
         self.scroll_frame = ctk.CTkScrollableFrame(frame, fg_color="transparent")
         self.scroll_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
-        # Données
+        # Données fictives
         users_data = [
             ("JoelFaria", "joel@cpnv.ch", "12.10.2002", "15.01.2024", "user", 1),
             ("AdminMaster", "admin@cpnv.ch", "01.01.1990", "10.01.2024", "admin", 0),
@@ -95,6 +105,12 @@ class AdminDashboard(ctk.CTk):
         for user in users_data:
             self.add_user_row(user)
         return frame
+
+    def retourchoixdomaine(self):
+        self.destroy()
+        from Frontend.Choix_du_domaine import ChoixDomaineApp
+        app = ChoixDomaineApp()
+        app.mainloop()
 
     def show_gestion(self):
         self.validation_view.pack_forget()
