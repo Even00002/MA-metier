@@ -1,5 +1,5 @@
 """
-Nom du fichier : seed_subdomains.py
+Nom du fichier : session.py
 Auteur : Joel Cunha Faria
 Date de création : 2.01.2026
 Date de modification : 22.01.2026

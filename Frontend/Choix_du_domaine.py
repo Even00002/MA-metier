@@ -5,9 +5,11 @@ Date de création : 16.01.2026
 """
 
 import customtkinter as ctk
+from CTkMessagebox import CTkMessagebox
 import os
 from PIL import Image
 import Backend.session as session
+from Backend.Services.auth_service import AuthService
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -207,11 +209,22 @@ class ChoixDomaineApp(ctk.CTk):
         app.mainloop()
 
     def appgestionuser(self):
-        self.destroy()  # Ferme la fenêtre Login
-        from Frontend.admin_user_gestion import AdminDashboard  # Import local pour éviter la boucle
+        # Vérifier si l'utilisateur est admin
+        success, message = AuthService.is_admin()
+
+        if not success:
+            CTkMessagebox(
+                title="Accès refusé",
+                message=message,
+                icon="cancel"
+            )
+            return
+
+        # Si admin, on ouvre l'admin dashboard
+        self.destroy()
+        from Frontend.admin_user_gestion import AdminDashboard
         app = AdminDashboard()
         app.mainloop()
-
 
     # === Resize background ===
     def _resize_bg(self, event):

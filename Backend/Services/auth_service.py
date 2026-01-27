@@ -9,6 +9,7 @@ from Backend.DB.db_schema import engine
 from Backend.Class.Class_User import User
 from sqlalchemy import select
 from datetime import datetime
+import Backend.session as session
 
 class AuthService:
 
@@ -60,3 +61,13 @@ class AuthService:
             session.refresh(user)
 
             return True, user
+
+    @staticmethod
+    def is_admin():
+        if session.current_user is None:
+            return False, "Aucun utilisateur connecté"
+
+        if session.current_user.role != "admin":
+            return False, "Vous n'êtes pas administrateur"
+
+        return True, session.current_user

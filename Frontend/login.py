@@ -12,6 +12,7 @@ from PIL import Image
 from Frontend.signup import *
 from CTkMessagebox import CTkMessagebox
 import Backend.session as session
+from Backend.Services.auth_service import AuthService
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -185,7 +186,6 @@ class LoginApp(ctk.CTk):
         login = self.entry_user.get()
         password = self.entry_pass.get()
 
-        from Backend.Services.auth_service import AuthService
 
         success, result = AuthService.login(login, password)
 

@@ -4,7 +4,7 @@ Auteur : Joel Cunha Faria
 Date de création : 16.01.2026
 Date de modification : 19.01.2026
 """
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, Integer, String, Date, Boolean
 from Backend.DB.db_schema import Base
 
 class User(Base):
@@ -16,6 +16,8 @@ class User(Base):
     email = Column(String(175), nullable=False)
     birthdate = Column(Date, nullable=False)
     role = Column(String(10), nullable=False)
+    is_banned = Column(Boolean, nullable=False)
+    is_muted = Column(Boolean, nullable=False)
 
     def __repr__(self):
         """
