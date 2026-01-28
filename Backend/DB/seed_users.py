@@ -2,7 +2,7 @@
 Nom du fichier : seed_users.py
 Auteur : Joel Cunha Faria
 Date de création : 20.01.2026
-Date de modification : 21.01.2026
+Date de modification : 28.01.2026
 """
 
 from sqlalchemy import insert, select

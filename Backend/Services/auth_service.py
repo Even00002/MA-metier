@@ -2,7 +2,7 @@
 Nom du fichier : auth_service.py
 Auteur : Joel Cunha Faria
 Date de création : 23.01.2026
-Date de modification : 23.01.2026
+Date de modification : 28.01.2026
 """
 from sqlalchemy.orm import Session
 from Backend.DB.db_schema import engine
@@ -53,7 +53,9 @@ class AuthService:
                 email=email,
                 birthdate=birthdate,
                 password=password,
-                role="membre"
+                role="membre",
+                is_banned=False,
+                is_muted=False
             )
 
             session.add(user)

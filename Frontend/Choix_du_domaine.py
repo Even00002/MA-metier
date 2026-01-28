@@ -2,6 +2,7 @@
 Nom du fichier   : Choix_du_domaine.py
 Auteur           : Even
 Date de création : 16.01.2026
+Date de modification : 28.01.2026
 """
 
 import customtkinter as ctk
@@ -85,10 +86,10 @@ class ChoixDomaineApp(ctk.CTk):
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
         self.right.grid(row=0, column=1, sticky="nsew")
 
-        # Bouton retour
+        # Bouton Déconnexion
         ctk.CTkButton(
             self.right,
-            text="← Retour",
+            text="Déconnexion",
             width=100,
             fg_color="#019136",
             hover_color="#017a5c",

@@ -2,7 +2,7 @@
 Nom du fichier : Class_User.py
 Auteur : Joel Cunha Faria
 Date de création : 16.01.2026
-Date de modification : 19.01.2026
+Date de modification : 28.01.2026
 """
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from Backend.DB.db_schema import Base
