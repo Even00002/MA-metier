@@ -25,6 +25,10 @@ class AuthService:
             if user is None:
                 return False, "Utilisateur introuvable"
 
+            # Vérification si l'utilisateur est banni
+            if user.is_banned:
+                return False, "Utilisateur banni"
+
             print("USER TROUVÉ :", user)
 
             if user.password != password:

@@ -12,6 +12,7 @@ from Frontend.admin_validation import ValidationPage
 from Frontend.popups import ActionPopup, HistoryPopup
 from Backend.DB.db_schema import get_session
 from Backend.Class.Class_User import User
+from Backend.Services.user_service import set_user_ban
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -160,14 +161,42 @@ class AdminDashboard(ctk.CTk):
 
         def refresh_buttons():
             if state["ban"] == 1:
-                btn_ban.configure(text="Unban", fg_color="#A20909", command=lambda: ActionPopup(self, "Unban", username, state, "ban", refresh_buttons))
+                btn_ban.configure(
+                    text="Unban",
+                    fg_color="#A20909",
+                    command=lambda: (
+                        set_user_ban(username, False),
+                        state.update({"ban": 0}),
+                        refresh_buttons()
+                    )
+                )
             else:
-                btn_ban.configure(text="Ban", fg_color="#019136", command=lambda: ActionPopup(self, "Ban", username, state, "ban", refresh_buttons))
+                btn_ban.configure(
+                    text="Ban",
+                    fg_color="#019136",
+                    command=lambda: (
+                        set_user_ban(username, True),
+                        state.update({"ban": 1}),
+                        refresh_buttons()
+                    )
+                )
 
             if state["mute"] == 1:
-                btn_mute.configure(text="Unmute", fg_color="#A20909", command=lambda: ActionPopup(self, "Unmute", username, state, "mute", refresh_buttons))
+                btn_mute.configure(
+                    text="Unmute",
+                    fg_color="#A20909",
+                    command=lambda: ActionPopup(
+                        self, "Unmute", username, state, "mute", refresh_buttons
+                    )
+                )
             else:
-                btn_mute.configure(text="Mute", fg_color="#019136", command=lambda: ActionPopup(self, "Mute", username, state, "mute", refresh_buttons))
+                btn_mute.configure(
+                    text="Mute",
+                    fg_color="#019136",
+                    command=lambda: ActionPopup(
+                        self, "Mute", username, state, "mute", refresh_buttons
+                    )
+                )
 
         refresh_buttons()
         ctk.CTkButton(actions_frame, text=f"Voir l'historique ({warns})", fg_color="#019136", width=120, command=lambda: HistoryPopup(self, username, [])).pack(side="left", padx=2)
