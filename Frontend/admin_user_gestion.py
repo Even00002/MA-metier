@@ -8,9 +8,10 @@ Dernier changement : 27.01.2026
 import customtkinter as ctk
 from PIL import Image
 import os
-
 from Frontend.admin_validation import ValidationPage
 from Frontend.popups import ActionPopup, HistoryPopup
+from Backend.DB.db_schema import get_session
+from Backend.Class.Class_User import User
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
@@ -68,6 +69,25 @@ class AdminDashboard(ctk.CTk):
         # Affichage par défaut
         self.show_gestion()
 
+    def load_users_from_db(self):
+
+        session = get_session()
+        users = session.query(User).filter(User.role != "admin").all()
+
+        session.close()
+
+        users_data = []
+        for user in users:
+            users_data.append((
+                user.username,
+                user.email,
+                user.birthdate.strftime("%d.%m.%Y"),
+                user.role,
+                0
+            ))
+
+        return users_data
+
     def create_main_area(self):
         frame = ctk.CTkFrame(self.container, fg_color="white", corner_radius=0)
 
@@ -85,7 +105,7 @@ class AdminDashboard(ctk.CTk):
         header_frame = ctk.CTkFrame(frame, fg_color="#019136", corner_radius=5, height=50)
         header_frame.pack(fill="x", padx=20, pady=5)
 
-        self.columns_config = [("Username", 1), ("Email", 2), ("Date de naissance", 1), ("Création compte", 1), ("Role", 0.5), ("Actions", 2.5)]
+        self.columns_config = [("Username", 1), ("Email", 2), ("Date de naissance", 1), ("Role", 0.5), ("Actions", 2.5)]
 
         for i, (col_name, weight) in enumerate(self.columns_config):
             header_frame.grid_columnconfigure(i, weight=int(weight * 10))
@@ -95,12 +115,7 @@ class AdminDashboard(ctk.CTk):
         self.scroll_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
         # Données fictives
-        users_data = [
-            ("JoelFaria", "joel@cpnv.ch", "12.10.2002", "15.01.2024", "user", 1),
-            ("AdminMaster", "admin@cpnv.ch", "01.01.1990", "10.01.2024", "admin", 0),
-            ("Newbie23", "test@gmail.com", "22.05.2005", "16.01.2026", "user", 3),
-            ("BadUser", "bad@banned.com", "09.09.1999", "12.12.2025", "user", 2)
-        ]
+        users_data = self.load_users_from_db()
 
         for user in users_data:
             self.add_user_row(user)
@@ -121,7 +136,7 @@ class AdminDashboard(ctk.CTk):
         self.validation_view.pack(fill="both", expand=True)
 
     def add_user_row(self, user_data):
-        username, email, dob, created, role, warns = user_data
+        username, email, dob, role, warns = user_data
         state = {"ban": 0, "mute": 0}
         row = ctk.CTkFrame(self.scroll_frame, fg_color="#86c49c", corner_radius=5)
         row.pack(fill="x", pady=5)
@@ -133,8 +148,7 @@ class AdminDashboard(ctk.CTk):
         ctk.CTkLabel(row, text=username, **text_style).grid(row=0, column=0, pady=10)
         ctk.CTkLabel(row, text=email, **text_style).grid(row=0, column=1, pady=10)
         ctk.CTkLabel(row, text=dob, **text_style).grid(row=0, column=2, pady=10)
-        ctk.CTkLabel(row, text=created, **text_style).grid(row=0, column=3, pady=10)
-        ctk.CTkLabel(row, text=role, **text_style).grid(row=0, column=4, pady=10)
+        ctk.CTkLabel(row, text=role, **text_style).grid(row=0, column=3, pady=10)
 
         actions_frame = ctk.CTkFrame(row, fg_color="transparent")
         actions_frame.grid(row=0, column=5, pady=5, padx=5)
