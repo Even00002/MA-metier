@@ -10,9 +10,13 @@ from Backend.DB.db_schema import engine, Base
 from Backend.Class.Class_User import User
 from Backend.Class.Class_Domain import Domain
 from Backend.Class.Class_SubDomain import SubDomain
+from Backend.Class.Class_Message import Message
+from Backend.Class.Class_User_Send_Message import UserSendMessage
+
 
 def init_db():
     Base.metadata.create_all(engine)
+
 
 if __name__ == "__main__":
     init_db()
