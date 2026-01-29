@@ -201,24 +201,11 @@ class SignupApp(ctk.CTk):
         from Backend.Services.auth_service import AuthService
         import Backend.session as session
 
-        success, result = AuthService.signup(
-            username, email, birthdate, password
-        )
+        success, result = AuthService.signup(username, email, birthdate, password)
 
         if success:
-            session.current_user = result  # 👈 USER stocké
-
-            CTkMessagebox(
-                title="Succès",
-                message="Compte créé avec succès",
-                icon="check"
-            )
-
-            self.withdraw()
-            from Frontend.Choix_du_domaine import ChoixDomaineApp
-            app = ChoixDomaineApp()
-            app.mainloop()
-
+            session.current_user = result
+            CTkMessagebox(title="Succès", message="Compte créé avec succès", icon="check")
         else:
             CTkMessagebox(title="Erreur", message=result, icon="cancel")
 
