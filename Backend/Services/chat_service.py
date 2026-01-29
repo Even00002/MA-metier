@@ -2,11 +2,12 @@
 Nom du fichier : chat_service.py
 Auteur : David Vilela
 Date de création : 26.01.2026
+Date de modification : 29.01.2026
 """
 
 from datetime import date
 from sqlalchemy import select
-from Backend.DB.db_schema import engine
+from Backend.DB.db_schema import Session  # factory de session
 
 from Backend.Class.Class_User import User
 from Backend.Class.Class_Domain import Domain
@@ -21,37 +22,40 @@ class ChatService:
         """
         Envoie un message dans un domaine
         """
-        with engine.begin() as conn:
-
-            user = conn.execute(
+        with Session() as session:
+            # Vérifie que l'utilisateur existe
+            user = session.execute(
                 select(User).where(User.id == user_id)
             ).scalar_one_or_none()
 
             if user is None:
                 return False, "Utilisateur introuvable"
 
-            domain = conn.execute(
+            # Vérifie que le domaine existe
+            domain = session.execute(
                 select(Domain).where(Domain.id == domain_id)
             ).scalar_one_or_none()
 
             if domain is None:
                 return False, "Domaine introuvable"
 
+            # Création du message
             message = Message(
                 Content=content,
                 sending_date=date.today(),
                 domains_id=domain_id
             )
+            session.add(message)
+            session.flush()  # récupère message.id pour le lien
 
-            conn.add(message)
-            conn.flush()
-
+            # Création du lien UserSendMessage
             link = UserSendMessage(
                 users_id=user_id,
                 messages_id=message.id
             )
+            session.add(link)
 
-            conn.add(link)
+            session.commit()  # commit final pour tout sauvegarder
 
             return True, message
 
@@ -60,8 +64,7 @@ class ChatService:
         """
         Récupère tous les messages d'un domaine avec leur auteur
         """
-        with engine.begin() as conn:
-
+        with Session() as session:
             stmt = (
                 select(
                     Message.id,
@@ -75,7 +78,7 @@ class ChatService:
                 .order_by(Message.sending_date)
             )
 
-            results = conn.execute(stmt).all()
+            results = session.execute(stmt).all()
 
             messages = []
             for msg in results:
@@ -83,7 +86,7 @@ class ChatService:
                     "id": msg.id,
                     "content": msg.Content,
                     "date": msg.sending_date,
-                    "username": msg.username
+                    "username": msg.username  # vrai nom de l'utilisateur
                 })
 
             return True, messages

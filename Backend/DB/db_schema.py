@@ -33,7 +33,7 @@ engine = create_engine(f"sqlite:///{DB_PATH}")
 Base = declarative_base()
 
 # --------------------------------- SESSION FACTORY ---------------------------------
-SessionLocal = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
 
 # --------------------------------- UTILITY FUNCTION ---------------------------------
 def get_session():
@@ -41,4 +41,4 @@ def get_session():
     Creates and returns a new SQLAlchemy session
     Used for all CRUD operations
     """
-    return SessionLocal()
+    return Session()

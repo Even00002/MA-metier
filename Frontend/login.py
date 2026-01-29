@@ -186,20 +186,29 @@ class LoginApp(ctk.CTk):
         login = self.entry_user.get()
         password = self.entry_pass.get()
 
+        try:
+            success, result = AuthService.login(login, password)
+        except Exception as e:
+            CTkMessagebox(
+                title="Erreur",
+                message=f"Erreur inattendue : {str(e)}",
+                icon="cancel"
+            )
+            return
 
-        success, result = AuthService.login(login, password)
-
-        if success:
+        if success and result is not None:
+            # Authentification OK
             session.current_user = result
 
-            self.destroy()  # Ferme la fenêtre Signup
+            self.destroy()  # Ferme la fenêtre Login
             from Frontend.Choix_du_domaine import ChoixDomaineApp  # Import local
             app = ChoixDomaineApp()
             app.mainloop()
         else:
+            # Auth échouée
             CTkMessagebox(
                 title="Erreur",
-                message=result,
+                message=result if result else "Identifiants incorrects",
                 icon="cancel"
             )
 
