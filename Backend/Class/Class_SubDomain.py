@@ -4,6 +4,7 @@ Auteur : Joel Cunha Faria
 Date de création : 21.01.2026
 Date de modification : 22.01.2026
 """
+from Backend.Class.Class_Domain import Domain
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from Backend.DB.db_schema import Base

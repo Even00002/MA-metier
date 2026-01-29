@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     add_subdomain(
         "Programmation",
-        "JavaScript",
+        "JavaScript_Backend",
         "JavaScript est un langage de programmation principalement utilisé pour le développement web. Il permet de rendre les pages interactives et dynamiques directement dans le navigateur.\n\n"
         "Il est utilisé pour manipuler le contenu HTML et CSS, gérer des événements et communiquer avec des serveurs.\n\n"
         "Concepts clés : variables, conditions, boucles, fonctions, événements, manipulation du DOM et objets.\n\n"
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
     add_subdomain(
         "Web",
-        "JavaScript",
+        "JavaScript_Frontend",
         "JavaScript est le langage qui rend les pages web interactives et dynamiques. "
         "Il permet de modifier le contenu HTML et CSS en temps réel, de réagir aux actions des utilisateurs et de communiquer avec des serveurs via des API.\n\n"
         "Concepts clés : DOM (Document Object Model), événements, fonctions, promesses, fetch/AJAX, ES6+, manipulation des éléments et animations.\n\n"

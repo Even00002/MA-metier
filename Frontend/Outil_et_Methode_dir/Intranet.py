@@ -2,12 +2,14 @@
 Nom du fichier   : Sujets.py
 Auteur           : Even
 Date de création : 21.01.2026
+Date de modification : 29.01.2026
 """
 
 from Frontend.Outil_et_Methode import ChoixOutils
 import customtkinter as ctk
 import os
 from PIL import Image
+from Backend.Services.subdomain_service import get_sujet_text
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "..", "assets")
@@ -126,16 +128,12 @@ class SujetsIntranet(ctk.CTk):
         ).pack(pady=(30, 20))
 
         # Texte sujet
-        ctk.CTkLabel(
-            self.card,
-            text=(
-                "https://intranet.cpnv.ch"
-            ),
-            font=ctk.CTkFont(size=13),
-            text_color="white",
-            justify="center",
-            wraplength=450
-        ).pack(padx=40)
+        sujet_texte = get_sujet_text("Lien de l'intranet")
+
+        self.text_box = ctk.CTkTextbox(self.card, font=ctk.CTkFont(size=13), fg_color="#7ac596", text_color="white")
+        self.text_box.insert("0.0", sujet_texte)
+        self.text_box.configure(state="disabled")  # empêche l'édition
+        self.text_box.pack(fill="both", expand=True, padx=20, pady=20)
 
         # Bouton modifier
         ctk.CTkButton(
