@@ -199,7 +199,6 @@ class AdminDashboard(ctk.CTk):
                 )
 
         refresh_buttons()
-        ctk.CTkButton(actions_frame, text=f"Voir l'historique ({warns})", fg_color="#019136", width=120, command=lambda: HistoryPopup(self, username, [])).pack(side="left", padx=2)
 
 if __name__ == "__main__":
     app = AdminDashboard()
