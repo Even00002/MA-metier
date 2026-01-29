@@ -60,17 +60,15 @@ class ChoixProg(ctk.CTk):
         ).place(relx=0.05, rely=0.20, anchor="w")
 
         # ======== CHAT ========
-        # ======== CHAT ========
         # Frame pour le chat
         self.left_text = ctk.CTkFrame(
             self.bg_label,
             fg_color="#2f8f5b",
-            corner_radius=0,  # coins carrés
+            corner_radius=0,
             border_color="black",
             border_width=2
         )
-        self.left_text.place(relx=0.05, rely=0.25, relwidth=0.80,
-                             relheight=0.60)  # plus bas pour ne pas chevaucher le titre
+        self.left_text.place(relx=0.05, rely=0.25, relwidth=0.80, relheight=0.60)
 
         # Canvas + Scrollbar
         self.chat_canvas = ctk.CTkCanvas(self.left_text, bg="#2f8f5b", highlightthickness=0)
@@ -89,21 +87,17 @@ class ChoixProg(ctk.CTk):
         self.chat_inner_frame.bind("<Configure>", on_configure)
 
         # ======== Zone d'envoi sous le chat ========
-        # Frame du champ + bouton
         self.entry_frame = ctk.CTkFrame(
             self.bg_label,
             fg_color="#2f8f5b",
             corner_radius=0,
             height=40
         )
-        # Positionnement : relwidth = largeur proportionnelle à la fenêtre
         self.entry_frame.place(relx=0.05, rely=0.87, relwidth=0.80)
 
-        # Champ de saisie
         self.message_entry = ctk.CTkEntry(self.entry_frame, placeholder_text="Écrire un message...")
-        self.message_entry.pack(side="left", fill="x", expand=True, padx=(0, 5), pady=5)
+        self.message_entry.pack(side="left", fill="x", expand=True, padx=(0,5), pady=5)
 
-        # Bouton Envoyer
         self.send_button = ctk.CTkButton(
             self.entry_frame,
             text="Envoyer",
@@ -113,32 +107,7 @@ class ChoixProg(ctk.CTk):
             corner_radius=0,
             command=self.send_message
         )
-        self.send_button.pack(side="right", padx=(5, 0), pady=5)
-
-        # ======== Messages ========
-        def load_chat(self):
-            for widget in self.chat_inner_frame.winfo_children():
-                widget.destroy()
-
-            success, messages = ChatService.get_messages_by_domain(DOMAIN_ID)
-            if success:
-                for msg in messages:
-                    is_user = msg['username'] == session.current_user.username
-                    anchor = "e" if is_user else "w"
-
-                    ctk.CTkLabel(
-                        self.chat_inner_frame,
-                        text=f"{msg['username']} : {msg['content']}",
-                        fg_color="transparent",
-                        corner_radius=0,
-                        text_color="white",
-                        padx=5,
-                        pady=2
-                    ).pack(side="top", anchor=anchor, pady=2, padx=5)
-
-                # Scroll automatique en bas
-                self.chat_canvas.update_idletasks()
-                self.chat_canvas.yview_moveto(1.0)
+        self.send_button.pack(side="right", padx=(5,0), pady=5)
 
         # ================= DROITE =================
         self.right = ctk.CTkFrame(self, fg_color="white", corner_radius=0)
@@ -175,7 +144,7 @@ class ChoixProg(ctk.CTk):
             font=ctk.CTkFont(size=26, weight="bold"),
             text_color="white",
             justify="center"
-        ).pack(pady=(30, 20))
+        ).pack(pady=(30,20))
 
         self.buttons_frame = ctk.CTkFrame(self.card, fg_color="transparent")
         self.buttons_frame.pack(pady=20)
@@ -270,12 +239,11 @@ class ChoixProg(ctk.CTk):
         self.message_entry.delete(0, "end")
         self.load_chat()
 
+    # ===== Méthode load_chat corrigée =====
     def load_chat(self):
-        # Supprime tous les anciens messages
         for widget in self.chat_inner_frame.winfo_children():
             widget.destroy()
 
-        # Récupère les messages depuis la DB
         success, messages = ChatService.get_messages_by_domain(DOMAIN_ID)
         if success:
             for msg in messages:
@@ -283,7 +251,7 @@ class ChoixProg(ctk.CTk):
                 ctk.CTkLabel(
                     self.chat_inner_frame,
                     text=f"{msg['username']} : {msg['content']}",
-                    fg_color="transparent",  # plus de fond
+                    fg_color="transparent",
                     corner_radius=0,
                     text_color="white",
                     padx=5,
@@ -292,9 +260,9 @@ class ChoixProg(ctk.CTk):
                     justify="left"
                 ).pack(anchor="w", pady=2, padx=5)
 
-            # Scroll en bas
-            self.chat_canvas.update_idletasks()
-            self.chat_canvas.yview_moveto(1.0)
+        # Scroll en bas
+        self.chat_canvas.update_idletasks()
+        self.chat_canvas.yview_moveto(1.0)
 
 
 if __name__ == "__main__":
